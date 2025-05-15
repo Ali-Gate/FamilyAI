@@ -37,3 +37,25 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message by {self.sender.username} on Ticket #{self.ticket.id}"
+    
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    ticket = models.ForeignKey('Ticket', on_delete=models.CASCADE, null=True, blank=True)
+    message = models.ForeignKey('Message', on_delete=models.CASCADE, null=True, blank=True)
+    
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    
+    is_seen = models.BooleanField(default=False)
+    seen_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def mark_as_seen(self):
+        if not self.is_seen:
+            self.is_seen = True
+            self.seen_at = timezone.now()
+            self.save()
+
+    def __str__(self):
+        return f"Notification for {self.user.username} - {self.title}"
