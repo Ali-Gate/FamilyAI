@@ -30,7 +30,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com',
+ALLOWED_HOSTS = ['https://family-ai-3bfb51c271b9.herokuapp.com',
+                '.herokuapp.com',
                 'localhost',
                 '127.0.0.1',]
 
@@ -110,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
+    'https://family-ai-3bfb51c271b9.herokuapp.com',
     'https://*.herokuapp.com',
     'http://127.0.0.1:8000',
 ]
