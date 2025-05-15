@@ -1,1 +1,1 @@
-web: gunicorn counter_app.wsgi
+web: gunicorn family_ai.wsgi
