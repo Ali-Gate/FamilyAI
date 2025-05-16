@@ -22,6 +22,7 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
+    path('accounts/', include('allauth.urls')),  # AllAuth routes
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('', include('family_ai_app.urls', namespace='family_ai_app')),
