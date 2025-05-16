@@ -62,3 +62,15 @@ nav a {
 nav a:hover {
     color: var(--secondary); /* Change color on hover */
 }
+
+footer {
+    background-color: var(--primary);
+    color: var(--secondary);
+    text-align: center;
+    padding: 1rem 0;
+    position: relative; /* Allows positioning of child elements */
+    margin-top: 0px;
+    box-sizing: border-box;
+    border-top: var(--secondary) solid 1px;
+    box-shadow: 0 0 5px #6c8080;
+}
