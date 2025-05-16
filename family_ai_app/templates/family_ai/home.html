@@ -3,11 +3,8 @@
 {% block content %}
 
 <div id="main">
-
     <!-- avatar container-->
-    <div class="container">
-
-    </div>
+    <div class="container"></div>
 
     <!-- Chat Bot Container-->
     <div id="main_content" class="container">
@@ -16,30 +13,108 @@
         <h2>How can we help you today?</h2>
         <div>
             <h3>What's going wrong? Type it here</h3>
-            <form method="POST" action="{% url 'family_ai_app:home' %}">
+            <form id="problem-form">
                 {% csrf_token %}
-                <textarea name="problem_description" rows="4" cols="50" placeholder="Describe your problem here..."></textarea>
+                <textarea name="problem_description" id="problem-input" rows="4" cols="50" placeholder="Describe your problem here..."></textarea>
                 <br>
                 <input type="submit" value="Submit">
             </form>
         </div>
     </div>
+    
     <!-- Chat Bot Container-->
     <div id="chatbot" class="container">
         <h2>Live Chat</h2>
         <div>
             <input type="text" id="id_message_send_input" />
             {% if user.is_authenticated %}
-            <button type="submit" id="id_message_send_button">Send Message</button>
+            <button type="button" id="id_message_send_button">Send Message</button>
             {% else %}
             <p>You must be logged in to send messages.</p>
             {% endif %}
-            <div class="chat__item__container" id="id_chat_item_container">
+            <div class="chat__item__container" id="id_chat_item_container"></div>
         </div>
     </div>
-
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle problem description form submission
+    document.getElementById('problem-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const input = document.getElementById('problem-input').value;
+        const chatContainer = document.getElementById('id_chat_item_container');
+        
+        if (!input) return;
+        
+        try {
+            // Add user message to chat
+            chatContainer.innerHTML += `<div class="user-message">You: ${input}</div>`;
+            
+            // Send to API
+            const response = await fetch('/api/conversation/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ input: input })
+            });
+            
+            const data = await response.json();
+            
+            // Add AI response to chat
+            if (data.response) {
+                chatContainer.innerHTML += `<div class="ai-message">AI: ${data.response}</div>`;
+            } else if (data.error) {
+                chatContainer.innerHTML += `<div class="error-message">Error: ${data.error}</div>`;
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+            chatContainer.innerHTML += `<div class="error-message">Connection error</div>`;
+        }
+    });
 
+    // Handle live chat message submission
+    document.getElementById('id_message_send_button')?.addEventListener('click', async function() {
+        const input = document.getElementById('id_message_send_input').value;
+        const chatContainer = document.getElementById('id_chat_item_container');
+        
+        if (!input) return;
+        
+        try {
+            // Add user message to chat
+            chatContainer.innerHTML += `<div class="user-message">You: ${input}</div>`;
+            
+            // Send to API
+            const response = await fetch('/api/conversation/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ input: input })
+            });
+            
+            const data = await response.json();
+            
+            // Add AI response to chat
+            if (data.response) {
+                chatContainer.innerHTML += `<div class="ai-message">AI: ${data.response}</div>`;
+            } else if (data.error) {
+                chatContainer.innerHTML += `<div class="error-message">Error: ${data.error}</div>`;
+            }
+            
+            // Clear input
+            document.getElementById('id_message_send_input').value = '';
+            
+        } catch (error) {
+            console.error('Error:', error);
+            chatContainer.innerHTML += `<div class="error-message">Connection error</div>`;
+        }
+    });
+});
+</script>
 
 {% endblock %}
