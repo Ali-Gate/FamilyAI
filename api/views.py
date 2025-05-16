@@ -3,12 +3,16 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import AIInteraction, AIConversationSession
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from .serializers import AIInteractionSerializer
 import openai
 import os
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+
+@method_decorator(csrf_exempt, name='dispatch')
 class AIConversationView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -50,6 +54,7 @@ class AIConversationView(APIView):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class EndConversationView(APIView):
     permission_classes = [IsAuthenticated]
 
