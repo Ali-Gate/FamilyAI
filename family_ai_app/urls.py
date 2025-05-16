@@ -7,6 +7,8 @@ from .views import (
     TicketDeleteView,
     MessageListCreateView,
     MessageDetailView,
+    NotificationListView,
+    NotificationDetailView,
     # Placeholder for future Notification views
 )
 
@@ -30,4 +32,8 @@ urlpatterns = [
     # Message endpoints
     path('messages/', MessageListCreateView.as_view(), name='message-list-create'),
     path('messages/<int:pk>/', MessageDetailView.as_view(), name='message-detail'),
+
+    # Notification endpoints
+    path('notifications/', NotificationListView.as_view(), name='notification-list'),
+    path('notifications/<int:pk>/', NotificationDetailView.as_view(), name='notification-detail'),
 ]
