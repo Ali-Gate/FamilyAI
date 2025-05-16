@@ -3,6 +3,7 @@ from .views import (
     home,
     UserListView,
     TicketListCreateView,
+    TicketDetailView,
     TicketDeleteView,
     MessageListCreateView,
     MessageDetailView,
@@ -23,6 +24,7 @@ urlpatterns = [
 
     # Ticket endpoints
     path('tickets/', TicketListCreateView.as_view(), name='ticket-list-create'),
+    path('tickets/<int:pk>/', TicketDetailView.as_view(), name='ticket-detail'),
     path('tickets/<int:pk>/delete/', TicketDeleteView.as_view(), name='ticket-delete'),
 
     # Message endpoints
