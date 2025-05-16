@@ -6,41 +6,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loch Inn JukeBox</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Family_AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
     <script src="https://kit.fontawesome.com/0737a17f1d.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-<header>
-    <div id="fai_header">
-    
-        <h1>Family AI</h1>
-        <nav>
-            <div><a href="{% url 'home' %}">Home</a></div>
-            {% if user.is_authenticated %}
-            <div><a href="{% url 'account_logout' %}">Logout</a></div>
-            {% else %}
-            <div><a href="{% url 'account_login' %}">Login</a></div>
-            <div><a href="{% url 'account_signup' %}">Sign Up</a></div>
-            {% endif %}
-        </nav>
-    </div>
-</header>
+    <header>
+        <div id="fai_header">
+            <div>
+                <h1>Family AI</h1>
+                <p>Technology made easy</p>
+            </div>
+            <nav>
+                <div><a href="">Home</a></div>
+                {% if user.is_authenticated %}
+                <div><a href="">Logout</a></div>
+                {% else %}
+                <div><a href="">Login</a></div>
+                <div><a href="">Sign Up</a></div>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
 
-<main>
-    <div>
-        {% block content %}
-        {% endblock %}
-    </div>
-</main>
+    <main>
+        <div>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
 
-    
-
+    <footer>
+        <div id="fai_footer">
+            <p>&copy; 2025 Family AI. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
-<footer>
-    <div id="fai_footer">
-        <p>&copy; 2025 Family AI. All rights reserved.</p>
-    </div>
 
 </html>

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Molle&family=Roboto+Slab:wght@100..900&display=swap');
+
+:root {
+    --primary: #134F5C;
+    --secondary: rgb(255, 255, 255);
+    --tertiary: #A2C4C9;
+}
+
+body {
+    font-family: 'Roboto Slab', serif;
+    background-color: var(--tertiary);
+    color: var(--secondary);
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-family: 'Molle', cursive;
+    font-size: 2.5rem;
+    color: var(--secondary);
+    margin-top: 0px;
+    clear: both;
+}
+
+h2, h3, h4, h5, h6 {
+    color: var(--primary);
+    margin-top: 0px;
+    clear: both;
+}
+
+/* Style for the header */
+header {
+    color: var(--secondary);
+    background-color: var(--primary);
+    position: relative; /* Allows positioning of child elements */
+    margin-top: 0px;
+    box-sizing: border-box;
+    border-bottom: var(--secondary) solid 1px;
+    box-shadow: 0 0 5px #6c8080;
+}
+
+/* Style for the navigation bar */
+nav {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: inline-flex;
+    margin-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Style for the nav links */
+nav a {
+    text-decoration: none; /* Remove underline */
+    color: var(--primary); /* Use your primary color variable */
+    font-weight: bold; /* Optional: Make the text bold */
+    margin: 0 0.5rem; /* Add spacing between links */
+}
+
+
+/* Add hover effect for links */
+nav a:hover {
+    color: var(--secondary); /* Change color on hover */
+}
