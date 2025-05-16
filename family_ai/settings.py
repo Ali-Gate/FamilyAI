@@ -55,14 +55,14 @@ INSTALLED_APPS = [
     # Third-party apps
     'allauth',
     'allauth.account',
-    'allauth.socialaccount.apps.ApiConfig',
+    'allauth.socialaccount.apps.SocialAccountConfig',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
 
     # Local Apps
     'family_ai_app',
-    'api',
+    'api.apps.ApiConfig',
 ]
 
 SITE_ID = 1
