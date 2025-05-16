@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -30,6 +31,10 @@ class Ticket(models.Model):
     def __str__(self):
         # String representation for readability in admin or logs
         return f"Ticket #{self.id} - {self.subject}"
+    
+    def clean(self):
+        if self.status not in dict(self.STATUS_CHOICES):
+            raise ValidationError("Invalid status value.")
 
 
 class Message(models.Model):
@@ -61,6 +66,10 @@ class Message(models.Model):
     def __str__(self):
         # String representation for readability in admin or logs
         return f"Message by {self.sender.username} on Ticket #{self.ticket.id}"
+    
+    def clean(self):
+        if not self.message.strip():
+            raise ValidationError("Message content cannot be empty or just whitespace.")
 
 
 class Notification(models.Model):
