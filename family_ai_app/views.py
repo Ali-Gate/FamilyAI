@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions
-from family_ai_app.models import Ticket, Message
-from family_ai_app.serializers import TicketSerializer, MessageSerializer, UserSerializer
+from family_ai_app.models import Ticket, Message, Notification
+from family_ai_app.serializers import TicketSerializer, MessageSerializer, UserSerializer, NotificationSerializer
 from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
 
 # Create your views here.
@@ -74,3 +74,21 @@ class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
         if user.is_staff or user.is_superuser:
             return Message.objects.all()
         return Message.objects.filter(sender=user)
+    
+
+class NotificationListView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Return notifications only for the authenticated user
+        return Notification.objects.filter(user=self.request.user).order_by('-created_at')
+
+
+class NotificationDetailView(generics.RetrieveDestroyAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # User can only retrieve or delete their own notifications
+        return Notification.objects.filter(user=self.request.user)
