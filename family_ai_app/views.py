@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from rest_framework import generics, permissions
 from family_ai_app.models import Ticket, Message
-from family_ai_app.serializers import TicketSerializer, MessageSerializer
+from family_ai_app.serializers import TicketSerializer, MessageSerializer, UserSerializer
 from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
 
 # Create your views here.
@@ -9,6 +10,12 @@ from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
 
 def home(request):
     return render(request, 'family_ai/home.html')
+
+
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class TicketListCreateView(generics.ListCreateAPIView):
