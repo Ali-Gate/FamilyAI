@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from family_ai_app.models import Ticket
-from family_ai_app.serializers import TicketSerializer
-from family_ai_app.permissions import IsOwnerOrAdmin
+from family_ai_app.models import Ticket, Message
+from family_ai_app.serializers import TicketSerializer, MessageSerializer
+from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
 
 # Create your views here.
 
@@ -30,3 +30,29 @@ class TicketDeleteView(generics.DestroyAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrAdmin]
+
+
+class MessageListCreateView(generics.ListCreateAPIView):
+    serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff or user.is_superuser:
+            return Message.objects.all()
+        return Message.objects.filter(sender=user)
+
+    def perform_create(self, serializer):
+        serializer.save(sender=self.request.user)
+
+
+class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated, IsSenderOrAdmin]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff or user.is_superuser:
+            return Message.objects.all()
+        return Message.objects.filter(sender=user)
