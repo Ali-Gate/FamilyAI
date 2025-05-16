@@ -21,6 +21,7 @@ class MessageSerializer(serializers.ModelSerializer):
             'is_read',
             'read_at',
             'created_at',
+            'title_contents',
         ]
         read_only_fields = [
             'id',
@@ -29,7 +30,11 @@ class MessageSerializer(serializers.ModelSerializer):
             'is_read',
             'read_at',
             'created_at',
+            'title_contents',
         ]
+
+    def get_title_contents(self, obj):
+        return f"Ticket #{obj.ticket.id} - {obj.ticket.subject}"
 
     def validate_message(self, value):
         if not value.strip():
