@@ -61,11 +61,11 @@ class MessageListCreateView(generics.ListCreateAPIView):
         return Message.objects.filter(sender=user)
 
     def perform_create(self, serializer):
+        # Force the sender to be the authenticated user
         serializer.save(sender=self.request.user)
 
 
 class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated, IsSenderOrAdmin]
 
@@ -74,6 +74,11 @@ class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
         if user.is_staff or user.is_superuser:
             return Message.objects.all()
         return Message.objects.filter(sender=user)
+
+    def perform_update(self, serializer):
+        # Ensure the sender cannot be changed on update
+        serializer.validated_data.pop('sender', None)
+        serializer.save()
     
 
 class NotificationListView(generics.ListAPIView):
