@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import dj_database_url
 from pathlib import Path
 import os
+from datetime import timedelta
 
 if os.path.isfile('env.py'):
     import env
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'family_ai_app',
     'api',
     'rest_framework',
+    'rest_framework_simplejwt',
     'rest_framework.authtoken',
 ]
 
@@ -79,6 +81,21 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # Add this line
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 WSGI_APPLICATION = 'family_ai.wsgi.application'
 
@@ -117,6 +134,10 @@ CSRF_TRUSTED_ORIGINS = [
     'https://family-ai-3bfb51c271b9.herokuapp.com',
     'https://*.herokuapp.com',
     'http://127.0.0.1:8000',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 # Internationalization

@@ -3,11 +3,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import AIInteraction, AIConversationSession
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from .serializers import AIInteractionSerializer
-import openai
 import os
+from openai import OpenAI 
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Initialize the client
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 class AIConversationView(APIView):
     permission_classes = [IsAuthenticated]
@@ -23,19 +27,19 @@ class AIConversationView(APIView):
         if not user_input:
             return Response({"error": "Input cannot be empty"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Generate AI response
+        # Generate AI response using new API format
         try:
-            response = openai.ChatCompletion.create(
-                model="gpt-4o-mini",
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",  
                 messages=[
-                    {"role": "system", "content": "You are a patient, kind assistant helping family members with technical issues. Provide simple, step-by-step instructions suitable for all ages."},
-                    {"role": "user", "content": f"Explain this in very simple terms: {user_input}"}
+                    {"role": "system", "content": "You are a helpful assistant. Please assist the user but make sure you make the instructions in step by step format and very easy to follow as the user might be elderly or a child"},
+                    {"role": "user", "content": user_input}
                 ],
                 temperature=0.5,
                 max_tokens=500
             )
 
-            ai_response = response.choices[0].message['content'].strip()
+            ai_response = response.choices[0].message.content  
 
             # Save interaction
             interaction = AIInteraction.objects.create(
@@ -50,8 +54,10 @@ class AIConversationView(APIView):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class EndConversationView(APIView):
-    permission_classes = [IsAuthenticated]
+
+    permission_classes = [IsAuthenticated] 
 
     def post(self, request):
         session = AIConversationSession.objects.filter(
