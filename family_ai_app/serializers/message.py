@@ -8,6 +8,7 @@ class MessageSerializer(serializers.ModelSerializer):
     is_read = serializers.BooleanField(read_only=True)
     read_at = serializers.DateTimeField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
+    ticket_title = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Message
@@ -15,6 +16,7 @@ class MessageSerializer(serializers.ModelSerializer):
             'id',
             'ticket',
             'ticket_id',
+            'ticket_title',
             'sender',
             'sender_username',
             'message',
@@ -29,7 +31,12 @@ class MessageSerializer(serializers.ModelSerializer):
             'is_read',
             'read_at',
             'created_at',
+            'ticket_title',
         ]
+
+    def get_ticket_title(self, obj):
+        # This assumes the Ticket model has a `title` field
+        return obj.ticket.subject if obj.ticket and hasattr(obj.ticket, 'subject') else None
 
     def validate_message(self, value):
         if not value.strip():
