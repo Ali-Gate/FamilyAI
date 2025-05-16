@@ -1,4 +1,7 @@
 {% load static %}
+{% url 'account_login' as login_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,10 +24,10 @@
             <nav>
                 <div><a href="">Home</a></div>
                 {% if user.is_authenticated %}
-                <div><a href="">Logout</a></div>
+                <div><a href="{% url 'account_logout' %}">Logout</a></div>
                 {% else %}
-                <div><a href="">Login</a></div>
-                <div><a href="">Sign Up</a></div>
+                <div><a href="{% url 'account_login' %}">Login</a></div>
+                <div><a href="{% url 'account_signup' %}">Sign Up</a></div>
                 {% endif %}
             </nav>
         </div>
