@@ -4,8 +4,13 @@
 
 <div id="main">
 
+    <!-- avatar container-->
+    <div class="container">
 
-    <div id="main_content">
+    </div>
+
+    <!-- Chat Bot Container-->
+    <div id="main_content" class="container">
         <h2>Welcome to Family AI!</h2>
         <p>Your one-stop solution for all your family technology needs.</p>
         <h2>How can we help you today?</h2>
@@ -17,6 +22,19 @@
                 <br>
                 <input type="submit" value="Submit">
             </form>
+        </div>
+    </div>
+    <!-- Chat Bot Container-->
+    <div id="chatbot" class="container">
+        <h2>Live Chat</h2>
+        <div>
+            <input type="text" id="id_message_send_input" />
+            {% if user.is_authenticated %}
+            <button type="submit" id="id_message_send_button">Send Message</button>
+            {% else %}
+            <p>You must be logged in to send messages.</p>
+            {% endif %}
+            <div class="chat__item__container" id="id_chat_item_container">
         </div>
     </div>
 
