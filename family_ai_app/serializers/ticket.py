@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Ticket
+from family_ai_app.models import Ticket
 from .message import MessageSerializer  # import MessageSerializer
 
 class TicketSerializer(serializers.ModelSerializer):
