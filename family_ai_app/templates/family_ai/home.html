@@ -2,7 +2,25 @@
 {% load static %}
 {% block content %}
 
-<div></div>
+<div id="main">
+
+
+    <div id="main_content">
+        <h2>Welcome to Family AI!</h2>
+        <p>Your one-stop solution for all your family technology needs.</p>
+        <h2>How can we help you today?</h2>
+        <div>
+            <h3>What's going wrong? Type it here</h3>
+            <form method="POST" action="{% url 'family_ai_app:home' %}">
+                {% csrf_token %}
+                <textarea name="problem_description" rows="4" cols="50" placeholder="Describe your problem here..."></textarea>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+</div>
 
 
 

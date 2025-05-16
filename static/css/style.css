@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Molle&family=Roboto+Slab:wght@100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=Genos:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
     --primary: #134F5C;
     --secondary: rgb(255, 255, 255);
@@ -7,24 +6,60 @@
 }
 
 body {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Commissioner', sans-serif;
     background-color: var(--tertiary);
     color: var(--secondary);
+    text-align: center;
     margin: 0;
     padding: 0;
 }
 
-h1 {
-    font-family: 'Molle', cursive;
-    font-size: 2.5rem;
+p {
+    font-family: 'Commissioner', sans-serif;
+    font-size: 1rem;
+    color: var(--primary);
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Style for the header text */
+div.logo {
+    width: 165px;
+    float: left;
+}
+
+div.logo b {    
+    font-family: 'Genos', sans-serif;
+    font-size: 2.5rem;    
+}
+
+div.logo p {
+    font-size: 1rem;
     color: var(--secondary);
-    margin-top: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    font-family: 'Genos', cursive;
+    font-size: 2.4rem;
+    color: var(--secondary);
+    margin: 0px;
     clear: both;
 }
 
+h2 {    
+    font-size: 2rem;    
+}
+
+h3 {    
+    font-size: 1.2rem;    
+}
+
 h2, h3, h4, h5, h6 {
+    font-family: 'Genos', cursive;
     color: var(--primary);
-    margin-top: 0px;
+    margin: 0px;
     clear: both;
 }
 
@@ -33,10 +68,17 @@ header {
     color: var(--secondary);
     background-color: var(--primary);
     position: relative; /* Allows positioning of child elements */
+    height: 100px;
     margin-top: 0px;
+    padding: 1rem;
     box-sizing: border-box;
     border-bottom: var(--secondary) solid 1px;
     box-shadow: 0 0 5px #6c8080;
+}
+
+/* Style for logo area */
+.logo {
+    padding: 0;    
 }
 
 /* Style for the navigation bar */
@@ -45,32 +87,41 @@ nav {
     bottom: 0;
     right: 0;
     display: inline-flex;
-    margin-right: 1rem;
+    margin-right: 0rem;
     padding-bottom: 1rem;
 }
 
 /* Style for the nav links */
 nav a {
     text-decoration: none; /* Remove underline */
-    color: var(--primary); /* Use your primary color variable */
+    color: var(--secondary); /* Use your primary color variable */
     font-weight: bold; /* Optional: Make the text bold */
     margin: 0 0.5rem; /* Add spacing between links */
 }
 
-
 /* Add hover effect for links */
 nav a:hover {
-    color: var(--secondary); /* Change color on hover */
+    color: var(--tertiary); /* Change color on hover */
 }
 
 footer {
     background-color: var(--primary);
-    color: var(--secondary);
     text-align: center;
     padding: 1rem 0;
-    position: relative; /* Allows positioning of child elements */
+    height: 60px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     margin-top: 0px;
     box-sizing: border-box;
     border-top: var(--secondary) solid 1px;
     box-shadow: 0 0 5px #6c8080;
+}
+
+/* Style for the footer text and links */
+footer p {
+    color: var(--secondary);
+    margin: 0;
+    padding: 0;
 }
