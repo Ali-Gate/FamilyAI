@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'family_ai_app',
-    'api',
+    'api.apps.ApiConfig',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
