@@ -1,6 +1,6 @@
 from django.urls import path
+from . import views
 from .views import (
-    home,
     UserListView,
     TicketListCreateView,
     TicketDetailView,
@@ -17,7 +17,7 @@ app_name = 'family_ai_app'
 
 # The urlpatterns list routes URLs to views
 urlpatterns = [
-    path('', home, name='home'),
+    path('', views.home, name='home'),
 
     # User endpoints
     path('users/', UserListView.as_view(), name='user-list'),
