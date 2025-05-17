@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from family_ai_app.views import CustomSignupView
+from family_ai_app.views.auth_views import CustomSignupView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
