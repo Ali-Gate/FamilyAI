@@ -11,6 +11,17 @@ from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
 def home(request):
     return render(request, 'family_ai/home.html')
 
+def register(request):  
+    return render(request, 'family_ai/register.html')
+
+
+def login(request):
+    return render(request, 'family_ai/login.html')
+
+
+def logout(request):
+    return render(request, 'family_ai/logout.html')
+
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()

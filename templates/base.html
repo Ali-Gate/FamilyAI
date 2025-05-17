@@ -25,10 +25,10 @@
             <nav>
                 <div><a href="{% url 'family_ai_app:home' %}">Home</a></div>
                 {% if user.is_authenticated %}
-                <div><a href="{% url 'account_logout' %}">Logout</a></div>
+                <div><a href="{% url 'family_ai_app:logout' %}">Logout</a></div>
                 {% else %}
-                <div><a href="{% url 'account_login' %}">Login</a></div>
-                <div><a href="{% url 'account_signup' %}">Sign Up</a></div>
+                <div><a href="{% url 'family_ai_app:login' %}">Login</a></div>
+                <div><a href="{% url 'family_ai_app:register' %}">Register</a></div>                
                 {% endif %}
             </nav>
         </div>
