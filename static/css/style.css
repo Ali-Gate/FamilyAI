@@ -125,3 +125,20 @@ footer p {
     margin: 0;
     padding: 0;
 }
+
+/* Container styles */
+.container {
+    
+    color: var(--primary);
+    font-size: 1.5em;
+    text-align: center;
+    padding: 16px;
+    margin: 16px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #0f5cc2;
+    border: 2px solid var(--primary);  
+    box-sizing: border-box; 
+    float: left;
+}
+
+/* Responsiveness */
