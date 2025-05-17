@@ -12,15 +12,6 @@ from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
 def home(request):
     return render(request, 'family_ai/home.html')
 
-def login_redirect(request):
-    return redirect('account_login')
-
-def logout_redirect(request):
-    return redirect('account_logout')
-
-def register_redirect(request):
-    return redirect('account_signup')
-
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
