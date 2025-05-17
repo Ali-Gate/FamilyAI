@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family_AI</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="https://kit.fontawesome.com/0737a17f1d.js" crossorigin="anonymous"></script>
 </head>
 
@@ -19,12 +19,12 @@
                 <p>Technology made easy</p>
             </div>
             <nav>
-                <div><a href="">Home</a></div>
+                <div><a href="{% url 'family_ai_app:home' %}">Home</a></div>
                 {% if user.is_authenticated %}
-                <div><a href="">Logout</a></div>
+                <div><a href="{% url 'family_ai_app:logout' %}">Logout</a></div>
                 {% else %}
-                <div><a href="">Login</a></div>
-                <div><a href="">Sign Up</a></div>
+                <div><a href="{% url 'family_ai_app:login' %}">Login</a></div>
+                <div><a href="{% url 'family_ai_app:register' %}">Register</a></div>                
                 {% endif %}
             </nav>
         </div>
