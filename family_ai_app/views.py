@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics, permissions
 from family_ai_app.models import Ticket, Message, Notification
 from family_ai_app.serializers import TicketSerializer, MessageSerializer, UserSerializer, NotificationSerializer
-from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
+from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin, IsOwnerOfNotification
 
 # Create your views here.
 
@@ -102,7 +102,7 @@ class NotificationListView(generics.ListAPIView):
 
 class NotificationDetailView(generics.RetrieveDestroyAPIView):
     serializer_class = NotificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOfNotification]
 
     def get_queryset(self):
         # User can only retrieve or delete their own notifications
