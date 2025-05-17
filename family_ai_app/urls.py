@@ -1,5 +1,14 @@
 from django.urls import path
 from . import views
+from .views import (
+    UserListView,
+    TicketListCreateView,
+    TicketDetailView,
+    TicketDeleteView,
+    MessageListCreateView,
+    MessageDetailView,
+    # Placeholder for future Notification views
+)
 
 
 app_name = 'family_ai_app'
@@ -12,4 +21,16 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+
+    # User endpoints
+    path('users/', UserListView.as_view(), name='user-list'),
+
+    # Ticket endpoints
+    path('tickets/', TicketListCreateView.as_view(), name='ticket-list-create'),
+    path('tickets/<int:pk>/', TicketDetailView.as_view(), name='ticket-detail'),
+    path('tickets/<int:pk>/delete/', TicketDeleteView.as_view(), name='ticket-delete'),
+
+    # Message endpoints
+    path('messages/', MessageListCreateView.as_view(), name='message-list-create'),
+    path('messages/<int:pk>/', MessageDetailView.as_view(), name='message-detail'),
 ]
