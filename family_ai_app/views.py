@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from allauth.account.views import SignupView
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions
 from family_ai_app.models import Ticket, Message, Notification
@@ -11,16 +12,14 @@ from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
 def home(request):
     return render(request, 'family_ai/home.html')
 
-def register(request):  
-    return render(request, 'family_ai/register.html')
+def login_redirect(request):
+    return redirect('account_login')
 
+def logout_redirect(request):
+    return redirect('account_logout')
 
-def login(request):
-    return render(request, 'family_ai/login.html')
-
-
-def logout(request):
-    return render(request, 'family_ai/logout.html')
+def register_redirect(request):
+    return redirect('account_signup')
 
 
 class UserListView(generics.ListAPIView):
@@ -108,3 +107,12 @@ class NotificationDetailView(generics.RetrieveDestroyAPIView):
     def get_queryset(self):
         # User can only retrieve or delete their own notifications
         return Notification.objects.filter(user=self.request.user)
+    
+
+class CustomSignupView(SignupView):
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Logout the user immediately after sign-up
+        from django.contrib.auth import logout
+        logout(self.request)
+        return redirect('/accounts/login/')  # redirects to login page

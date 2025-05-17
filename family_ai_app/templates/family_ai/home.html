@@ -10,6 +10,7 @@
     <div id="main_content" class="container">
         <h2>Welcome to Family AI!</h2>
         <p>Your one-stop solution for all your family technology needs.</p>
+        {% if user.is_authenticated %}
         <h2>How can we help you today?</h2>
         <div>
             <h3>What's going wrong? Type it here</h3>
@@ -20,6 +21,17 @@
                 <input type="submit" value="Submit">
             </form>
         </div>
+        {% else %}
+        <h2>Log in or register to get started</h2>
+        <div style="margin: 20px 0;">
+            <a href="{% url 'account_login' %}">
+            <button type="button">Log In</button>
+            </a>
+            <a href="{% url 'account_signup' %}">
+            <button type="button">Register</button>
+            </a>
+        </div>
+        {% endif %}
     </div>
     
     <!-- Chat Bot Container-->

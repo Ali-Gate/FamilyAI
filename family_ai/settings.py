@@ -68,10 +68,11 @@ INSTALLED_APPS = [
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # allow login via username or email
+ACCOUNT_LOGIN_METHOD = 'username_email'   # allow login via username or email
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
