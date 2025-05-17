@@ -12,14 +12,13 @@ from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin, IsOwnerOf
 def home(request):
     return render(request, 'family_ai/home.html')
 
-def login_redirect(request):
-    return redirect('account_login')
-
-def logout_redirect(request):
-    return redirect('account_logout')
-
-def register_redirect(request):
-    return redirect('account_signup')
+class CustomSignupView(SignupView):
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Logout the user immediately after sign-up
+        from django.contrib.auth import logout
+        logout(self.request)
+        return redirect('/accounts/login/')  # redirects to login page
 
 
 class UserListView(generics.ListAPIView):
@@ -108,11 +107,3 @@ class NotificationDetailView(generics.RetrieveDestroyAPIView):
         # User can only retrieve or delete their own notifications
         return Notification.objects.filter(user=self.request.user)
     
-
-class CustomSignupView(SignupView):
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        # Logout the user immediately after sign-up
-        from django.contrib.auth import logout
-        logout(self.request)
-        return redirect('/accounts/login/')  # redirects to login page
