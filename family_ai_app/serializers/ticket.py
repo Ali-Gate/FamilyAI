@@ -5,9 +5,14 @@ from .message import MessageSerializer
 
 class TicketSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
-    assigned_admin = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.filter(is_staff=True), required=False, allow_null=True
+    assigned_admin_id = serializers.PrimaryKeyRelatedField(
+        source='assigned_admin',
+        queryset=User.objects.filter(is_staff=True),
+        required=False,
+        allow_null=True,
+        write_only=True
     )
+    assigned_admin = serializers.SerializerMethodField()
     messages_count = serializers.SerializerMethodField()
     status_display = serializers.SerializerMethodField()
     messages = MessageSerializer(many=True, read_only=True)
@@ -15,14 +20,17 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = [
-            'id', 'user', 'assigned_admin', 'subject', 'status',
-            'status_display', 'messages_count', 'messages',
-            'created_at', 'updated_at',
+            'id', 'user', 'assigned_admin_id', 'assigned_admin',
+            'subject', 'status', 'status_display', 'messages_count',
+            'messages', 'created_at', 'updated_at',
         ]
         read_only_fields = [
             'id', 'user', 'created_at', 'updated_at',
-            'messages_count', 'status_display', 'messages'
+            'messages_count', 'status_display', 'messages', 'assigned_admin'
         ]
+
+    def get_assigned_admin(self, obj):
+        return obj.assigned_admin.username if obj.assigned_admin else None
 
     def get_messages_count(self, obj):
         return obj.messages.count()
@@ -54,10 +62,10 @@ class TicketSerializer(serializers.ModelSerializer):
         fields = super().get_fields()
         request = self.context.get('request')
 
-        # Make 'status' read-only for non-staff users so they don't see it writable
+        # Hide assignable fields from non-staff users
         if request and not (request.user.is_staff or request.user.is_superuser):
             fields['status'].read_only = True
-            fields['assigned_admin'].read_only = True  # Also hide assigned_admin from non-staff users
+            fields['assigned_admin_id'].read_only = True
 
         return fields
 
@@ -70,9 +78,8 @@ class AssignAdminSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         request = self.context.get('request')
         if request and request.user.is_staff:
-            instance.assigned_admin = request.user  # force assign self, ignore input
+            instance.assigned_admin = request.user  # force assign self
         else:
-            # fallback to input or keep existing assigned_admin
             instance.assigned_admin = validated_data.get('assigned_admin', instance.assigned_admin)
         instance.save()
         return instance
