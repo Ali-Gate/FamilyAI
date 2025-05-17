@@ -29,11 +29,14 @@ def notify_ticket_users_on_message(sender, instance, created, **kwargs):
         if ticket.user != sender_user:
             users_to_notify.add(ticket.user)
 
-        # Add all active staff admins except sender
-        admins = User.objects.filter(is_staff=True, is_active=True)
-        for admin in admins:
-            if admin != sender_user:
-                users_to_notify.add(admin)
+        if ticket.assigned_admin:
+            # Notify only the assigned admin if they are not the sender
+            if ticket.assigned_admin != sender_user:
+                users_to_notify.add(ticket.assigned_admin)
+        else:
+            # Notify all active staff admins except the sender
+            admins = User.objects.filter(is_staff=True, is_active=True).exclude(id=sender_user.id)
+            users_to_notify.update(admins)
 
         notifications = [
             Notification(
