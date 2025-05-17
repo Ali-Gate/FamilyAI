@@ -14,8 +14,8 @@ class TicketListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_staff or user.is_superuser:
-            return Ticket.objects.all()
-        return Ticket.objects.filter(user=user)
+            return Ticket.objects.all().order_by('-created_at')
+        return Ticket.objects.filter(user=user).order_by('-created_at')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
