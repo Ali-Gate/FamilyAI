@@ -3,6 +3,6 @@ from rest_framework import generics, permissions
 from family_ai_app.serializers import UserSerializer
 
 class UserListView(generics.ListAPIView):
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by('-id')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
