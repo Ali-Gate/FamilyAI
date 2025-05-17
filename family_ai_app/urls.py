@@ -1,26 +1,25 @@
 from django.urls import path
-from . import views
-from .views import (
-    UserListView,
+from family_ai_app.views.auth_views import home
+from family_ai_app.views.user_views import UserListView
+from family_ai_app.views.ticket_views import (
     TicketListCreateView,
     TicketDetailView,
     TicketDeleteView,
+)
+from family_ai_app.views.message_views import (
     MessageListCreateView,
     MessageDetailView,
+)
+from family_ai_app.views.notification_views import (
     NotificationListView,
     NotificationDetailView,
-    # Placeholder for future Notification views
 )
 
-
 app_name = 'family_ai_app'
-# The app_name is used to create namespaced URLs for the app.
 
-
-# The urlpatterns list routes URLs to views
 urlpatterns = [
     # Navigation endpoints
-    path('', views.home, name='home'),
+    path('', home, name='home'),
 
     # User endpoints
     path('users/', UserListView.as_view(), name='user-list'),

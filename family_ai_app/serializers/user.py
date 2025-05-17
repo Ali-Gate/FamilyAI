@@ -8,7 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
     tickets_count = serializers.IntegerField(source='tickets.count', read_only=True)
     messages_count = serializers.SerializerMethodField()
     notifications_unseen = serializers.SerializerMethodField()
-    recent_tickets = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -22,14 +21,12 @@ class UserSerializer(serializers.ModelSerializer):
             'tickets_count',
             'messages_count',
             'notifications_unseen',
-            'recent_tickets',
         ]
         read_only_fields = [
             'id',
             'tickets_count',
             'messages_count',
             'notifications_unseen',
-            'recent_tickets',
         ]
 
     def get_full_name(self, obj):
@@ -40,7 +37,3 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_notifications_unseen(self, obj):
         return obj.notifications.filter(is_seen=False).count()
-
-    def get_recent_tickets(self, obj):
-        recent = obj.tickets.order_by('-created_at')[:5]
-        return TicketSerializer(recent, many=True).data

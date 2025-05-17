@@ -4,13 +4,21 @@ from django.contrib.auth.models import User
 from rest_framework import generics, permissions
 from family_ai_app.models import Ticket, Message, Notification
 from family_ai_app.serializers import TicketSerializer, MessageSerializer, UserSerializer, NotificationSerializer
-from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
+from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin, IsOwnerOfNotification
 
 # Create your views here.
 
 
 def home(request):
     return render(request, 'family_ai/home.html')
+
+class CustomSignupView(SignupView):
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Logout the user immediately after sign-up
+        from django.contrib.auth import logout
+        logout(self.request)
+        return redirect('/accounts/login/')  # redirects to login page
 
 
 class UserListView(generics.ListAPIView):
@@ -93,17 +101,9 @@ class NotificationListView(generics.ListAPIView):
 
 class NotificationDetailView(generics.RetrieveDestroyAPIView):
     serializer_class = NotificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOfNotification]
 
     def get_queryset(self):
         # User can only retrieve or delete their own notifications
         return Notification.objects.filter(user=self.request.user)
     
-
-class CustomSignupView(SignupView):
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        # Logout the user immediately after sign-up
-        from django.contrib.auth import logout
-        logout(self.request)
-        return redirect('/accounts/login/')  # redirects to login page
