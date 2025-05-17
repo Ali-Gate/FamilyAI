@@ -24,107 +24,21 @@
     
     <!-- Chat Bot Container-->
     <div id="chatbot" class="container">
-        <h2>Live Chat</h2>
+        <div style="text-align: center; margin-bottom: 15px;">
+            <button id="refresh-chat" style="padding: 5px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; vertical-align: middle;">
+                ↻ Refresh
+            </button></br>
+            <h2 style="display: inline-block; margin-right: 20px;">Live Chat</h2>
+        </div>
         <div>
-            <input type="text" id="id_message_send_input" />
+            <input type="text" id="id_message_send_input" placeholder="Type your message here..." style="width: 80%; padding: 8px;"/>
             {% if user.is_authenticated %}
-            <button type="button" id="id_message_send_button">Send Message</button>
+            <button type="button" id="id_message_send_button" style="padding: 8px 15px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer;">Send</button>
             {% else %}
             <p>You must be logged in to send messages.</p>
             {% endif %}
-            <div class="chat__item__container" id="id_chat_item_container"></div>
+            <div class="chat__item__container" id="id_chat_item_container" style="margin-top: 15px;"></div>
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function cleanResponse(text) {
-            return text
-                .replace(/\*\*/g, '')      
-                .replace(/\*/g, '')        
-                .replace(/#{1,6}/g, '')    
-                .replace(/```[\s\S]*?```/g, '\n')  
-                .replace(/`/g, '')         
-                .replace(/\n{3,}/g, '\n\n') 
-                .replace(/\n/g, '<br>')    
-                .trim();
-        }
-    document.getElementById('problem-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const input = document.getElementById('problem-input').value;
-        const chatContainer = document.getElementById('id_chat_item_container');
-        
-        if (!input) return;
-        
-        try {
-            // Add user message to chat
-            chatContainer.innerHTML += `<div class="user-message">You: ${input}</div>`;
-            
-            // Send to API
-            const response = await fetch('/api/conversation/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ input: input })
-            });
-            
-            const data = await response.json();
-            
-            // Add AI response to chat
-            if (data.response) {
-                chatContainer.innerHTML += `<div class="ai-message">AI: ${data.response}</div>`;
-            } else if (data.error) {
-                chatContainer.innerHTML += `<div class="error-message">Error: ${data.error}</div>`;
-            }
-            
-        } catch (error) {
-            console.error('Error:', error);
-            chatContainer.innerHTML += `<div class="error-message">Connection error</div>`;
-        }
-    });
-
-    // Handle live chat message submission
-    document.getElementById('id_message_send_button')?.addEventListener('click', async function() {
-        const input = document.getElementById('id_message_send_input').value;
-        const chatContainer = document.getElementById('id_chat_item_container');
-        
-        if (!input) return;
-        
-        try {
-            // Add user message to chat
-            chatContainer.innerHTML += `<div class="user-message">You: ${input}</div>`;
-            
-            // Send to API
-            const response = await fetch('/api/conversation/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ input: input })
-            });
-            
-            const data = await response.json();
-            
-            // Add AI response to chat
-            if (data.response) {
-                chatContainer.innerHTML += `<div class="ai-message">AI: ${data.response}</div>`;
-            } else if (data.error) {
-                chatContainer.innerHTML += `<div class="error-message">Error: ${data.error}</div>`;
-            }
-            
-            // Clear input
-            document.getElementById('id_message_send_input').value = '';
-            
-        } catch (error) {
-            console.error('Error:', error);
-            chatContainer.innerHTML += `<div class="error-message">Connection error</div>`;
-        }
-    });
-});
-</script>
-
 {% endblock %}
