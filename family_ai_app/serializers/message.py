@@ -27,6 +27,7 @@ class MessageSerializer(serializers.ModelSerializer):
         read_only_fields = [
             'id',
             'ticket_id',
+            'sender',
             'sender_username',
             'is_read',
             'read_at',

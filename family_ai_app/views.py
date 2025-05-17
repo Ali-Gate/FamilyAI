@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions
-from family_ai_app.models import Ticket, Message
-from family_ai_app.serializers import TicketSerializer, MessageSerializer, UserSerializer
+from family_ai_app.models import Ticket, Message, Notification
+from family_ai_app.serializers import TicketSerializer, MessageSerializer, UserSerializer, NotificationSerializer
 from family_ai_app.permissions import IsOwnerOrAdmin, IsSenderOrAdmin
 
 # Create your views here.
@@ -72,11 +72,11 @@ class MessageListCreateView(generics.ListCreateAPIView):
         return Message.objects.filter(sender=user)
 
     def perform_create(self, serializer):
+        # Force the sender to be the authenticated user
         serializer.save(sender=self.request.user)
 
 
 class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated, IsSenderOrAdmin]
 
@@ -85,3 +85,26 @@ class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
         if user.is_staff or user.is_superuser:
             return Message.objects.all()
         return Message.objects.filter(sender=user)
+
+    def perform_update(self, serializer):
+        # Ensure the sender cannot be changed on update
+        serializer.validated_data.pop('sender', None)
+        serializer.save()
+    
+
+class NotificationListView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Return notifications only for the authenticated user
+        return Notification.objects.filter(user=self.request.user).order_by('-created_at')
+
+
+class NotificationDetailView(generics.RetrieveDestroyAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # User can only retrieve or delete their own notifications
+        return Notification.objects.filter(user=self.request.user)
