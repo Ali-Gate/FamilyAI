@@ -16,6 +16,16 @@ class Ticket(models.Model):
     # The user who created the ticket
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tickets')
 
+    # The admin assigned to handle the ticket (optional)
+    assigned_admin = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='assigned_tickets',
+        limit_choices_to={'is_staff': True}
+)
+
     # Subject or title of the support ticket
     subject = models.CharField(max_length=255)
 

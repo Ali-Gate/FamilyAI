@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from family_ai_app.models import Message
-from .ticket import TicketSerializer  # import TicketSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()

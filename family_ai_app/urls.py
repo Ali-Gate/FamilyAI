@@ -5,6 +5,7 @@ from family_ai_app.views.ticket_views import (
     TicketListCreateView,
     TicketDetailView,
     TicketDeleteView,
+    AssignSelfToTicketView,
 )
 from family_ai_app.views.message_views import (
     MessageListCreateView,
@@ -28,6 +29,7 @@ urlpatterns = [
     path('tickets/', TicketListCreateView.as_view(), name='ticket-list-create'),
     path('tickets/<int:pk>/', TicketDetailView.as_view(), name='ticket-detail'),
     path('tickets/<int:pk>/delete/', TicketDeleteView.as_view(), name='ticket-delete'),
+    path('tickets/<int:pk>/assign-me/', AssignSelfToTicketView.as_view(), name='ticket-assign-self'),
 
     # Message endpoints
     path('messages/', MessageListCreateView.as_view(), name='message-list-create'),
