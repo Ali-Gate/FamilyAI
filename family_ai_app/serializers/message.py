@@ -1,3 +1,4 @@
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
 from . import user  # if you need user serializers later (optional)
 from family_ai_app.models import Message
@@ -9,6 +10,8 @@ class MessageSerializer(serializers.ModelSerializer):
     read_at = serializers.DateTimeField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
     ticket_title = serializers.SerializerMethodField(read_only=True)
+    created_at = serializers.SerializerMethodField()
+    updated_at = serializers.SerializerMethodField()
 
     class Meta:
         model = Message
@@ -43,3 +46,9 @@ class MessageSerializer(serializers.ModelSerializer):
         if not value.strip():
             raise serializers.ValidationError("Message content cannot be empty.")
         return value
+    
+    def get_created_at(self, obj):
+        return naturaltime(obj.created_at)
+
+    def get_updated_at(self, obj):
+        return naturaltime(obj.updated_at)

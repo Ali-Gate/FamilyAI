@@ -1,3 +1,4 @@
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from family_ai_app.models import Ticket
@@ -16,13 +17,15 @@ class TicketSerializer(serializers.ModelSerializer):
     messages_count = serializers.SerializerMethodField()
     status_display = serializers.SerializerMethodField()
     messages = MessageSerializer(many=True, read_only=True)
+    created_at = serializers.SerializerMethodField()
+    updated_at = serializers.SerializerMethodField()
 
     class Meta:
         model = Ticket
         fields = [
             'id', 'user', 'assigned_admin_id', 'assigned_admin',
-            'subject', 'status', 'status_display', 'messages_count',
-            'messages', 'created_at', 'updated_at',
+            'subject', 'status', 'status_display', 'created_at', 'updated_at',
+            'messages_count', 'messages', 
         ]
         read_only_fields = [
             'id', 'user', 'created_at', 'updated_at',
@@ -68,6 +71,12 @@ class TicketSerializer(serializers.ModelSerializer):
             fields['assigned_admin_id'].read_only = True
 
         return fields
+    
+    def get_created_at(self, obj):
+        return naturaltime(obj.created_at)
+
+    def get_updated_at(self, obj):
+        return naturaltime(obj.updated_at)
 
 
 class AssignAdminSerializer(serializers.ModelSerializer):
