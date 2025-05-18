@@ -279,11 +279,11 @@ footer p {
     margin-bottom: 20px;
 }
 
-.chat-box-auth > a > button, .chat-box-auth > button {
+.chat-box-login > a > button, .chat-box-auth > button {
     background-color: #000;
 }
 
-.chat-box-auth > a > button:hover, .chat-box-auth > button:hover {
+.chat-box-login > a > button:hover, .chat-box-auth > button:hover {
     background-color: #3d3d3d;
 }
 

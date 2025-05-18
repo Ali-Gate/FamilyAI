@@ -33,8 +33,8 @@ urlpatterns = [
     path('api/tickets/<int:pk>/assign-me/', AssignSelfToTicketView.as_view(), name='ticket-assign-self'),
 
     # Message endpoints
-    path('messages/', MessageListCreateView.as_view(), name='message-list-create'),
-    path('messages/<int:pk>/', MessageDetailView.as_view(), name='message-detail'),
+    path('api/messages/', MessageListCreateView.as_view(), name='message-list-create'),
+    path('api/messages/<int:pk>/', MessageDetailView.as_view(), name='message-detail'),
 
     path('api/notifications/', NotificationListView.as_view(), name='notification-list'),
     path('api/notifications/<int:pk>/', NotificationDetailView.as_view(), name='notification-detail'),
