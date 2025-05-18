@@ -17,3 +17,11 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 - **Households with shared devices** - Families managing multiple gadgets and accounts.
 
 ---
+
+## Key Features
+✅ **AI-Powered Troubleshooting** - Uses OpenAI to interpret and resolve tech issues.  
+✅ **Conversational Interface** - Chat-based interaction for ease of use.  
+✅ **Multi-Device Support** - Covers smartphones, laptops, smart TVs, and more.  
+✅ **Django Backend** - Reliable and scalable for future enhancements.  
+
+---
