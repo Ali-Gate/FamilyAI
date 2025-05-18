@@ -27,10 +27,10 @@ urlpatterns = [
     path('users/', UserListView.as_view(), name='user-list'),
 
     # Ticket endpoints
-    path('tickets/', TicketListCreateView.as_view(), name='ticket-list-create'),
-    path('tickets/<int:pk>/', TicketDetailView.as_view(), name='ticket-detail'),
-    path('tickets/<int:pk>/delete/', TicketDeleteView.as_view(), name='ticket-delete'),
-    path('tickets/<int:pk>/assign-me/', AssignSelfToTicketView.as_view(), name='ticket-assign-self'),
+    path('api/tickets/', TicketListCreateView.as_view(), name='ticket-list-create'),
+    path('api/tickets/<int:pk>/', TicketDetailView.as_view(), name='ticket-detail'),
+    path('api/tickets/<int:pk>/delete/', TicketDeleteView.as_view(), name='ticket-delete'),
+    path('api/tickets/<int:pk>/assign-me/', AssignSelfToTicketView.as_view(), name='ticket-assign-self'),
 
     # Message endpoints
     path('messages/', MessageListCreateView.as_view(), name='message-list-create'),

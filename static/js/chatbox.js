@@ -48,3 +48,51 @@ document.addEventListener('DOMContentLoaded', function () {
         input.value = '';
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sendTicketBtn = document.getElementById("send-ticket-btn");
+    const ticketInput = document.getElementById("ticket-input");
+
+    sendTicketBtn.addEventListener("click", function () {
+        const subject = ticketInput.value.trim();
+
+        if (!subject) {
+            alert("Please enter a subject before submitting.");
+            return;
+        }
+
+        fetch("/api/tickets/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken(),  // see helper function below
+            },
+            body: JSON.stringify({ subject })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.detail || "Error creating ticket.");
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Ticket created:", data);
+            // You can render ticket info or transition to chat interface here
+            ticketInput.value = "";
+        })
+        .catch(error => {
+            console.error("Error:", error.message);
+            alert("Failed to submit ticket: " + error.message);
+        });
+    });
+
+    function getCSRFToken() {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            ?.split('=')[1];
+        return cookieValue;
+    }
+});
