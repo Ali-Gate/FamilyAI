@@ -18,14 +18,33 @@
             <h3>What's going wrong? Type it here</h3>
             <form id="problem-form">
                 {% csrf_token %}
-                <textarea name="problem_description" id="problem-input" rows="4" cols="50" placeholder="Describe your problem here..."></textarea>
+                <div class="textarea-with-button">
+                    <textarea name="problem_description" id="problem-input" rows="4" cols="50"
+                        placeholder="Describe your problem here..."></textarea>
+                    <button type="submit" class="arrow-submit" aria-label="Submit">
+                        &#8594; <!-- Unicode right arrow, or use an icon -->
+                    </button>
+                </div>
                 <br>
-                <input type="submit" value="Submit">
-                <button id="refresh-chat" style="padding: 5px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; vertical-align: middle;">
-                ↻ Refresh
-            </button></br>
+                <button id="refresh-chat">
+                    ↻ Refresh
+                </button>
+                </br>
             </form>
         </div>
+        <div id="problem-response" class="response-container" style="display: none;">
+            <h3>Response:</h3>
+            <div class="chat__item__container" id="id_chat_item_container" style="margin-top: 15px;">
+            </div>
+        </div>
+        <script>
+            document.getElementById('problem-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('problem-response').style.display = 'block';
+            // You may want to add your AJAX logic here to fetch and display the response.
+            });
+        </script>
+
         {% else %}
         <h2>Log in or register to get started</h2>
         <div style="margin: 20px 0;">
@@ -52,7 +71,6 @@
             {% else %}
             <p>You must be logged in to send messages.</p>
             {% endif %}
-            <div class="chat__item__container" id="id_chat_item_container" style="margin-top: 15px;"></div>
         </div>
     </div>
 </div>
