@@ -6,7 +6,7 @@ class NotificationSerializer(serializers.ModelSerializer):
     user_username = serializers.CharField(source='user.username', read_only=True)
     ticket_id = serializers.IntegerField(source='ticket.id', read_only=True)
     message_id = serializers.IntegerField(source='message.id', read_only=True)
-    is_seen = serializers.BooleanField(read_only=True)
+    is_seen = serializers.BooleanField()
     seen_at = serializers.DateTimeField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
 
@@ -36,7 +36,6 @@ class NotificationSerializer(serializers.ModelSerializer):
             'ticket_creator',
             'ticket_id',
             'message_id',
-            'is_seen',
             'seen_at',
             'created_at',
         ]
