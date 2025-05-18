@@ -1,11 +1,14 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from family_ai_app.models import Ticket
+from family_ai_app.models import Ticket, Message
 from family_ai_app.serializers import TicketSerializer
 from family_ai_app.serializers.ticket import AssignAdminSerializer
 from family_ai_app.permissions import IsOwnerOrAdmin
 from django.contrib.auth.models import User
 from family_ai_app.models import Notification
+
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
 
 class TicketListCreateView(generics.ListCreateAPIView):
     serializer_class = TicketSerializer
@@ -14,15 +17,26 @@ class TicketListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_staff or user.is_superuser:
+            # Admins can see all tickets
             return Ticket.objects.all().order_by('-created_at')
+        # Regular users only see their own tickets
         return Ticket.objects.filter(user=user).order_by('-created_at')
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        # Save ticket with current user as owner
+        ticket = serializer.save(user=self.request.user)
+        # Automatically create an initial message using the ticket subject
+        Message.objects.create(
+            ticket=ticket,
+            sender=self.request.user,
+            message=ticket.subject,
+        )
 
     def create(self, request, *args, **kwargs):
+        # Use default behavior and customize the response status
         response = super().create(request, *args, **kwargs)
         return Response(response.data, status=status.HTTP_201_CREATED)
+
 
 class TicketDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = TicketSerializer
