@@ -25,3 +25,16 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 ✅ **Django Backend** - Reliable and scalable for future enhancements.  
 
 ---
+
+## User Experience (UX)
+
+### Design
+
+#### Color Scheme
+- **Primary**: `#134F5C` ("Deep Teal")  
+  Used for: Headers, footers, and primary text in the main body  
+- **Secondary**: `#FFFFFF` ("Pure White")  
+  Used for: Dividing lines between sections, header/footer text  
+- **Tertiary**: `#A2C4C9` ("Misty Blue")  
+  Used for: Main background color
+
