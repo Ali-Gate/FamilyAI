@@ -66,3 +66,15 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 - **User Testing** - Family members validated clarity and usability.
 
 ---
+
+## Credits & Acknowledgments
+
+### Development Team
+- [Cameron](https://github.com/cameronjamesw) - Scrum Master & Developer
+- [Ali](https://github.com/Ali-Gate) - Frontend Superstar
+- [Mark](https://github.com/Mbutler1991) - AI Specialist
+
+### Special Thanks
+A huge thank you to the incredible **HackTeam** for organizing and judging these hackathons. Your dedication creates opportunities for developers to learn, grow, and create amazing projects.
+
+Extra gratitude to **Viola** for your unwavering motivation and support throughout the event. Your encouragement kept our team inspired when we faced challenges.
