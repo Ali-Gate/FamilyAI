@@ -42,3 +42,5 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 - **Body Text**: `Commissioner, sans-serif`
 - **Headings**:  `Genos, cursive`
 
+#### Wireframes
+*(readme_images/wireframe.png)*
