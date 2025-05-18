@@ -67,6 +67,73 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 
 ---
 
+## Deployment
+
+### Heroku Deployment Steps
+
+1. **Prepare Your Django Project**
+   ```bash
+   pip freeze > requirements.txt
+   echo "web: gunicorn your_project_name.wsgi" > Procfile
+   ```
+
+2. **Create Heroku App**
+   ```bash
+   heroku create your-app-name
+   git remote add heroku https://git.heroku.com/your-app-name.git
+   ```
+
+3. **Configure Buildpacks**
+   ```bash
+   heroku buildpacks:add heroku/python
+   heroku buildpacks:add heroku/nodejs
+   ```
+
+4. **Configure Django for Production**
+   ```bash
+   heroku config:set DISABLE_COLLECTSTATIC=1
+   ```
+
+5. **Initial Deployment**
+   ```bash
+   git add .
+   git commit -m "Initial deployment"
+   git push heroku main
+   ```
+
+6. **Database Setup**
+   ```bash
+   heroku run python manage.py migrate
+   ```
+
+7. **Create Admin User (Optional)**
+   ```bash
+   heroku run python manage.py createsuperuser
+   ```
+
+8. **Configure Static Files**
+   ```bash
+   heroku config:set DISABLE_COLLECTSTATIC=0
+   git commit --allow-empty -m "Trigger new build"
+   git push heroku main
+   ```
+
+9. **Open Your Application**
+   ```bash
+   heroku open
+   ```
+
+### Post-Deployment Checks
+- Verify all pages load correctly
+- Test form submissions and interactive elements
+- Check static files (CSS/JS) are loading properly
+- Monitor Heroku logs for errors:
+  ```bash
+  heroku logs --tail
+  ```
+
+---
+
 ## Credits & Acknowledgments
 
 ### Development Team
