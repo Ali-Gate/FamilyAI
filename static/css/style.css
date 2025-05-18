@@ -261,7 +261,7 @@ footer p {
     margin: 16px 0px;
 }
 
-
+/* Chatbox Styles */
 #chatbot-container {
     position: absolute;
     width: 300px;
@@ -272,6 +272,19 @@ footer p {
 
 #chatbot-container h2 {
     color: var(--secondary);
+}
+
+#chatbox-input > p {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.chat-box-auth > a > button, .chat-box-auth > button {
+    background-color: #000;
+}
+
+.chat-box-auth > a > button:hover, .chat-box-auth > button:hover {
+    background-color: #3d3d3d;
 }
 
 /* Responsiveness */    
