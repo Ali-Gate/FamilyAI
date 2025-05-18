@@ -13,7 +13,7 @@ html, body {
 body {
     font-family: 'Commissioner', sans-serif;
     background-color: var(--tertiary);
-    color: var(--secondary);
+    color: var(--primary);
     text-align: center;
     margin: 0;
     padding: 0;
@@ -22,26 +22,27 @@ body {
 
 p {
     font-family: 'Commissioner', sans-serif;
-    font-size: 1rem;
-    color: var(--primary);
     margin: 0px;
-    padding: 0px;
 }
 
 /* Style for the header text */
+/* Style for logo area */
+
 div.logo {
     width: 165px;
     float: left;
+    text-decoration: none;
+    padding: 0;
+    color: var(--secondary);
 }
 
 div.logo b {    
     font-family: 'Genos', sans-serif;
-    font-size: 2.5rem;    
+    font-size: 36px;
 }
 
 div.logo p {
     font-size: 1rem;
-    color: var(--secondary);
     margin: 0px;
     padding: 0px;
 }
@@ -71,6 +72,11 @@ h2, h3 {
     clear: both;
 }
 
+a {
+    color: var(--primary); /* Use your primary color variable */
+    font-weight: bold; /* Optional: Make the text bold */
+ }
+
 .form-text {
     font-family: 'Commissioner', sans-serif;
     font-size: 1rem;
@@ -92,11 +98,6 @@ header {
     box-shadow: 0 0 5px #6c8080;
 }
 
-/* Style for logo area */
-.logo {
-    padding: 0;    
-}
-
 /* Style for the navigation bar */
 
 
@@ -104,7 +105,8 @@ nav {
     float: right;
     display: inline-flex;
     margin-right: 0rem;
-    padding-bottom: 1rem;
+    padding-bottom: 5px;
+    margin-top: 25px;
 }
 
 /* Style for the nav links */
@@ -118,6 +120,14 @@ nav a {
 /* Add hover effect for links */
 nav a:hover {
     color: var(--tertiary); /* Change color on hover */
+}
+
+.salutation {
+    display: inline;
+    padding: 0px 8px 20px 0px;
+    font-size: 0.9rem;
+    float: right;
+    clear: right;
 }
 
 /* Style for general alignemnt */
@@ -205,6 +215,10 @@ button {
     border-radius: 5px;
 }
 
+label {
+    min-width: 140px;
+    display: inline-block;
+}
 
 /* Style for the footer */
 
@@ -232,6 +246,7 @@ footer p {
 
 /* Container styles */
 .container {
+    color: var(--primary);
     text-align: left;
     padding: 16px;
     margin: 16px;
