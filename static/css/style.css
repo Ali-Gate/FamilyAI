@@ -133,11 +133,80 @@ div#main-align {
     position: relative;
 }
 
+/* Style for the textarea form */
+
 textarea {
     max-width: calc(100% - 2 * 16px);
 }
 
+.textarea-with-button {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    background-color: var(--secondary);
+    border-radius: 5px;
+}
 
+.textarea-with-button textarea {
+    width: 100%;
+    padding-right: 40px; /* space for the button */
+    box-sizing: border-box;
+    border: none;         /* Removes border */
+    outline: none;        /* Removes focus outline (optional, for a cleaner look) */
+    resize: none;         /* Disables the resize handle */
+    background: var(--secondary);  /* Optional: subtle background for visibility */
+    font-size: 1rem;      /* Optional: adjust font size */
+    border-radius: 8px;   /* Optional: rounded corners */
+}
+
+.arrow-submit {
+    position: absolute;
+    right: 8px;
+    bottom: 0px;
+    background: var(--primary);
+    color: var(--secondary);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-weight: 600;
+}
+
+.response-container {
+    background-color: var(--secondary);
+    color: var(--primary);
+    border-radius: 5px;
+    padding: 16px;
+    margin: 0px;
+    box-sizing: border-box; 
+    float: left;
+    max-height: 500px;      /* Set your preferred max height */
+    overflow-y: auto;
+}
+
+/* Style for the buttons */
+button {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 6px 10px 8px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 10px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+/* Style for the footer */
 
 footer {
     background-color: var(--primary);
@@ -205,11 +274,7 @@ footer p {
     color: var(--secondary);
 }
 
-/* Responsiveness */
-
-
-   
-    
+/* Responsiveness */    
     
 @media screen and (max-width: 768px) {        
      #avatar-container {
