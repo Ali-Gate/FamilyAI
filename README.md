@@ -9,3 +9,11 @@ Family AI is a **smart chatbot** designed to help family members troubleshoot te
 ## Project Overview
 Family AI simplifies tech support by offering **AI-driven assistance** for common device, software, and connectivity problems. Whether it's fixing a printer or setting up a smartphone, the chatbot delivers **clear, jargon-free solutions** tailored for all ages.
 
+---
+
+## Target Audience
+- **Non-tech-savvy family members** - Elderly parents, children, or relatives needing simple guidance.
+- **Busy caregivers** - Those assisting others with tech issues remotely.
+- **Households with shared devices** - Families managing multiple gadgets and accounts.
+
+---
