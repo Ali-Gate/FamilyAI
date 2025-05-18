@@ -141,3 +141,86 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('chatHistory');
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('3d-model-container');
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    
+    // Create scene with custom background color
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xA2C4C9); 
+    
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(width, height);
+    container.appendChild(renderer.domElement);
+    
+    // Add lights 
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(directionalLight);
+    
+    // Add orbit controls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true; 
+    controls.dampingFactor = 0.05;
+    
+    // Load 3D model
+    const loader = new THREE.GLTFLoader();
+    let model;
+    
+    loader.load(
+        window.MODEL_URL,
+        function (gltf) {
+            model = gltf.scene;
+            scene.add(model);
+            
+            // Center and scale the model
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            
+            // Calculate scale factor to make model larger
+            const scaleFactor = 2.5 / Math.max(size.x, size.y, size.z);
+            model.scale.set(scaleFactor, scaleFactor, scaleFactor);
+            
+            // Reposition model to center
+            model.position.x -= center.x * scaleFactor;
+            model.position.y -= center.y * scaleFactor;
+            model.position.z -= center.z * scaleFactor;
+            
+            // Set initial camera position
+            camera.position.z = 5;
+            camera.position.y = 1;
+            controls.update();
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update(); 
+                renderer.render(scene, camera);
+            }
+            animate();
+        },
+        undefined,
+        function (error) {
+            console.error('Error loading 3D model:', error);
+            container.innerHTML = '<p>3D model failed to load. Showing default avatar.</p>';
+            const img = document.createElement('img');
+            img.src = window.FALLBACK_IMAGE;
+            img.alt = "Avatar";
+            container.appendChild(img);
+        }
+    );
+    
+
+    window.addEventListener('resize', function() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+});

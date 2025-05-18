@@ -11,7 +11,6 @@ class MessageSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     ticket_title = serializers.SerializerMethodField(read_only=True)
     created_at = serializers.SerializerMethodField()
-    updated_at = serializers.SerializerMethodField()
 
     class Meta:
         model = Message
@@ -49,6 +48,3 @@ class MessageSerializer(serializers.ModelSerializer):
     
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
-
-    def get_updated_at(self, obj):
-        return naturaltime(obj.updated_at)
