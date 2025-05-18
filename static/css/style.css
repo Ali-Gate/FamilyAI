@@ -5,6 +5,11 @@
     --tertiary: #A2C4C9;
 }
 
+html, body {
+    height: 100%;
+    min-height: 100vh;
+}
+
 body {
     font-family: 'Commissioner', sans-serif;
     background-color: var(--tertiary);
@@ -12,6 +17,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
+    overflow: auto;
 }
 
 p {
@@ -40,27 +46,37 @@ div.logo p {
     padding: 0px;
 }
 
+/* text styles */
+
 h1 {
     font-family: 'Genos', cursive;
     font-size: 2.4rem;
-    color: var(--secondary);
+    color: var(--primary);
     margin: 0px;
     clear: both;
 }
 
 h2 {    
-    font-size: 2rem;    
+    font-size: 1.5rem;    
 }
 
 h3 {    
     font-size: 1.2rem;    
 }
 
-h2, h3, h4, h5, h6 {
+h2, h3 {
     font-family: 'Genos', cursive;
     color: var(--primary);
     margin: 0px;
     clear: both;
+}
+
+.form-text {
+    font-family: 'Commissioner', sans-serif;
+    font-size: 1rem;
+    color: var(--primary);
+    margin: 0px;
+    padding: 0px;
 }
 
 /* Style for the header */
@@ -82,10 +98,10 @@ header {
 }
 
 /* Style for the navigation bar */
+
+
 nav {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    float: right;
     display: inline-flex;
     margin-right: 0rem;
     padding-bottom: 1rem;
@@ -103,6 +119,25 @@ nav a {
 nav a:hover {
     color: var(--tertiary); /* Change color on hover */
 }
+
+/* Style for general alignemnt */
+
+div#main-align {
+    height: calc(100vh - 160px); /* Full height minus header and footer */
+}
+
+#main-align, div#fai_header {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px;
+    position: relative;
+}
+
+textarea {
+    max-width: calc(100% - 2 * 16px);
+}
+
+
 
 footer {
     background-color: var(--primary);
@@ -128,17 +163,84 @@ footer p {
 
 /* Container styles */
 .container {
-    
-    color: var(--primary);
-    font-size: 1.5em;
-    text-align: center;
+    text-align: left;
     padding: 16px;
     margin: 16px;
     border-radius: 10px;
-    box-shadow: 0 0 15px #0f5cc2;
-    border: 2px solid var(--primary);  
     box-sizing: border-box; 
     float: left;
 }
 
+#avatar-container {
+    position: absolute; /* Normal flow of the document */
+    right: 0;
+    width: 300px; /* Fixed width */
+    display: block; /* Always visible */
+    text-align: center;
+}
+
+#avatar-container img {
+    width: 180px;
+    object-fit: contain;
+    display: block;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+#main-container {
+    width: calc(100% - 300px - 2* 16px);
+    margin: 16px 0px;
+}
+
+
+#chatbot-container {
+    position: absolute;
+    width: 300px;
+    bottom: 0px;
+    right: 0;
+    background-color: var(--primary);    
+}
+
+#chatbot-container h2 {
+    color: var(--secondary);
+}
+
 /* Responsiveness */
+
+
+   
+    
+    
+@media screen and (max-width: 768px) {        
+     #avatar-container {
+        /* Optional: limit image size */
+        min-width: 50px;        /* Minimum width for smaller screens */
+        width: 20%;         /* 20% of viewport width, scales with screen */
+        max-width: 150px;    /* Prevents it from getting too large */
+        padding: 8px;
+    }
+
+    #avatar-container img {
+        width: 100%;         /* Image fills the container */
+        height: auto;        /* Maintain aspect ratio */
+    }
+    
+    #main-container {
+        margin: 16px 16px 0px 16px;
+        float: none;
+        width: calc(100% - 3 * 16px - 30vw);
+        display: block;
+    }
+
+    #chatbot-container {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 60px;
+        width: calc(100% - 2 * 16px);
+        z-index: 1000;
+    }
+}
+
+
+
