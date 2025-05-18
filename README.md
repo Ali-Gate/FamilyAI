@@ -43,4 +43,4 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 - **Headings**:  `Genos, cursive`
 
 #### Wireframes
-*(readme_images/wireframe.png)*
+![wireframes](readme_images/wireframe.png)
