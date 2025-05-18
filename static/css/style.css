@@ -242,5 +242,12 @@ footer p {
     }
 }
 
+.notif-bell {
+    transition: color 0.3s ease;
+  }
+  
+  .notif-bell.unseen {
+    color: #b22222;
+  }
 
 

@@ -40,7 +40,7 @@
                 <div>
                     {% if user.is_authenticated %}
                     <a class="nav-link" href="{% url 'family_ai_app:alerts' %}">
-                    <i class="fa-solid fa-bell"></i>
+                    <i class="fa-solid fa-bell notif-bell"></i>
                     </a>
                     {% endif %}
                     <a class="nav-link" href="{% url 'family_ai_app:home' %}">Home</a>
@@ -67,6 +67,34 @@
             <p>&copy; 2025 Family AI. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const response = await fetch("/api/notifications/", {
+                    method: "GET",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json",
+                    },
+                    credentials: "same-origin",
+                });
+        
+                if (response.ok) {
+                    const data = await response.json();
+                    const hasUnseen = data.some(n => !n.is_seen);
+                    if (hasUnseen) {
+                        const bellIcon = document.querySelector(".notif-bell");
+                        if (bellIcon) {
+                            bellIcon.classList.add("unseen");
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to check unseen notifications:", err);
+            }
+        });
+        </script>
 </body>
 
 </html>
