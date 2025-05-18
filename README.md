@@ -44,3 +44,16 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 
 #### Wireframes
 ![wireframes](readme_images/wireframe.png)
+
+---
+
+## Technologies Used
+
+- **Languages**: Python, HTML, CSS, JavaScript
+- **Frameworks**: Django, Bootstrap
+- **AI Integration**: OpenAI API (GPT-4o-mini)
+- **Database**: NeonSQL (Dev)
+- **Version Control**: Git & GitHub
+- **Hosting**: Heroku 
+
+---
