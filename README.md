@@ -57,3 +57,12 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 - **Hosting**: Heroku 
 
 ---
+
+## Testing
+
+- **Django Unit Tests** - Verified backend logic and API calls.
+- **W3C Validators** - Confirmed HTML/CSS compliance (excluding Django templating).
+- **Responsive Design** - Tested on mobile, tablet, and desktop via Chrome DevTools.
+- **User Testing** - Family members validated clarity and usability.
+
+---
