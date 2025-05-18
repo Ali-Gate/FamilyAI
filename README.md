@@ -38,3 +38,7 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 - **Tertiary**: `#A2C4C9` ("Misty Blue")  
   Used for: Main background color
 
+#### Typography
+- **Body Text**: `Commissioner, sans-serif`
+- **Headings**:  `Genos, cursive`
+
