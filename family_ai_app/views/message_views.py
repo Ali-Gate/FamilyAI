@@ -10,7 +10,13 @@ class MessageListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Message.objects.all() if user.is_staff or user.is_superuser else Message.objects.filter(sender=user)
+        ticket_id = self.request.query_params.get('ticket_id')
+        queryset = Message.objects.all() if user.is_staff or user.is_superuser else Message.objects.filter(sender=user)
+
+        if ticket_id:
+            queryset = queryset.filter(ticket__id=ticket_id)
+
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(sender=self.request.user)
