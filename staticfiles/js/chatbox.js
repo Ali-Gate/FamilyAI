@@ -189,6 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) throw new Error("Failed to send message.");
             return response.json();
         })
+
         .then(data => {
             input.value = '';
             loadMessages(selectedTicketId);
@@ -198,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("Failed to send message: " + error.message);
         });
     });
+
 
     backBtn.addEventListener('click', function () {
         chatContent.innerHTML = initialChatContentHTML;
@@ -217,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function () {
         sendTicketBtn = document.getElementById("send-ticket-btn");
 
         attachTicketSelectorListener();
-
         attachTicketCreationListener();
     }
 

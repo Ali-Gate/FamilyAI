@@ -45,7 +45,7 @@ div.logo p {
     font-size: 1rem;
     margin: 0px;
     padding: 0px;
-}
+}   
 
 /* text styles */
 
@@ -154,7 +154,13 @@ textarea {
     display: inline-block;
     width: 100%;
     background-color: var(--secondary);
+    color: var(--primary);
+    font-family: 'Commissioner', sans-serif;
     border-radius: 5px;
+}
+
+button.arrow-submit {
+    margin: 2px 0;
 }
 
 .textarea-with-button textarea {
@@ -171,10 +177,10 @@ textarea {
 
 .arrow-submit {
     position: absolute;
-    right: 8px;
+    right: 4px;
     bottom: 0px;
-    background: var(--primary);
-    color: var(--secondary);
+    background: var(--secondary);
+    color: var(--primary);
     border: none;
     border-radius: 50%;
     width: 32px;
@@ -196,8 +202,8 @@ textarea {
     margin: 0px;
     box-sizing: border-box; 
     float: left;
-    max-height: 500px;      /* Set your preferred max height */
-    overflow-y: auto;
+    max-height: none;      /* Set your preferred max height */
+    overflow-y: visible;
 }
 
 /* Style for the buttons */
@@ -248,7 +254,7 @@ footer p {
 .container {
     color: var(--primary);
     text-align: left;
-    padding: 16px;
+    padding: 2px 10px 12px 10px;
     margin: 16px;
     border-radius: 10px;
     box-sizing: border-box; 
@@ -277,9 +283,11 @@ footer p {
 }
 
 /* Chatbox Styles */
+
 #chatbot-container {
     position: absolute;
     width: 300px;
+    max-height: 240px;
     bottom: 0px;
     right: 0;
     background-color: var(--primary);    
@@ -289,26 +297,22 @@ footer p {
     color: var(--secondary);
 }
 
-#chatbox-input > p {
-    color: #fff;
-    margin-bottom: 20px;
-}
-
 .chat-box-login > a > button, .chat-box-auth > button {
-    background-color: #000;
+    background-color: none;
 }
 
 .chat-box-login > a > button:hover, .chat-box-auth > button:hover {
-    background-color: #3d3d3d;
+    background-color: none;    
 }
 
 #chat-content {
-    max-height: 300px;
+    max-height: 120px;
     overflow-y: auto;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
     background: var(--tertiary);
+    font-size: 0.9rem;
 }
 
 .chat-window {
@@ -340,13 +344,14 @@ footer p {
 }
 
 .from-user {
-    background-color: #3d3d3d;
+    background-color: #tertiary;
+    color: var(--secondary);
     align-self: flex-end;
     text-align: right;
 }
 
 .from-admin {
-    background-color: #000;
+    background-color: var(--primary);
     align-self: flex-start;
     text-align: left;
 }
@@ -369,26 +374,32 @@ footer p {
     background-color: var(--primary);
 }
 
+button#send-ticket-button {
+    position: relative;
+    right: 0;
+    top: 0;
+}
+
 #chat-message-input {
     flex: 1;
     padding: 8px 10px;
     border: none;
     border-radius: 4px;
-    background-color: #3d3d3d;
-    color: #fff;
+    background-color: var(--tertiary);
+    color: var(--primary);
     font-size: 14px;
     margin-right: 8px;
 }
 
 #chat-message-input::placeholder {
-    color: #aaa;
+    color: #657081;
 }
 
 #chat-message-send {
     padding: 8px 14px;
-    border: none;
+    border: var(--tertiary) solid 1px;
     border-radius: 4px;
-    background-color: #000;
+    background-color: var(--primary);
     color: #fff;
     font-size: 14px;
     cursor: pointer;
@@ -396,7 +407,9 @@ footer p {
 }
 
 #chat-message-send:hover {
-    background-color: #3d3d3d;
+    background-color: var(--secondary);
+    color: var(--primary);
+    font-weight: bold;
 }
 
 #chatbox-header {
@@ -433,6 +446,10 @@ footer p {
         float: none;
         width: calc(100% - 3 * 16px - 30vw);
         display: block;
+        height: calc(100vh - 60px - 240px - 32px);
+        overflow-y: auto;
+        padding-bottom: 300px; /* Extra space so last content isn't hidden behind chat */
+
     }
 
     #chatbot-container {
