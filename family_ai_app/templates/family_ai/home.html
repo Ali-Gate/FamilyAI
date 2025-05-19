@@ -61,17 +61,47 @@
     <!-- Chat Bot Container-->
     <div id="chatbot-container" class="container">
         <div style="text-align: center; margin-bottom: 15px;">
-        
+            <i id="back-btn" class="fa-solid fa-arrow-left" style="display:none; cursor:pointer;"></i>
             <h2 style="display: inline-block; margin-right: 20px;">Live Chat</h2>
         </div>
-        <div>
-            <input type="text" id="id_message_send_input" placeholder="Type your message here..." style="width: 80%; padding: 8px;"/>
-            {% if user.is_authenticated %}
-            <button type="button" id="id_message_send_button" style="padding: 8px 15px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer;">Send</button>
-            {% else %}
-            <p>You must be logged in to send messages.</p>
-            {% endif %}
+    
+        <div id="chat-content">
+            <div id="chatbox-input">
+                <p>Sometimes AI gets it wrong... we get it.</p>
+    
+                {% if user.is_authenticated %}
+                    <p>Open a ticket to speak with a human.</p>
+
+                    <!-- Ticket Subject Input -->
+                    <div class="chat-box-auth" style="display: none;">
+                        <input id="ticket-input" type="text" placeholder="Type your problem here..." style="width: 80%; padding: 8px;" />
+                        <button id="send-ticket-btn" type="button">Send</button>
+                    </div>
+    
+                    <!-- Ticket Selector (initially hidden) -->
+                    <div id="ticket-selector-container" style="display: none; margin-top: 15px;">
+                        <label for="ticket-selector">Select an Open Ticket:</label>
+                        <select id="ticket-selector" style="width: 80%; padding: 6px; margin-top: 5px;">
+                            <option value="">-- Select a Ticket --</option>
+                        </select>
+                    </div>
+    
+                {% else %}
+                    <p>You must be logged in to open a ticket.</p>
+                    <div class="chat-box-login">
+                        <a href="{% url 'account_login' %}"><button type="button">Log In</button></a>
+                        <a href="{% url 'account_signup' %}"><button type="button">Register</button></a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
+    
+        <!-- Chat Message Form -->
+        <form id="chat-message-form" style="display: none; margin-top: 10px;">
+            <input type="text" id="chat-message-input" placeholder="Type your message..." autocomplete="off" style="width: 80%; padding: 8px;" />
+            <button type="submit" id="chat-message-send">Send</button>
+        </form>
     </div>
+    
 </div>
 {% endblock %}
