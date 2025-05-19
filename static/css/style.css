@@ -412,6 +412,18 @@ button#send-ticket-button {
     font-weight: bold;
 }
 
+#chatbox-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#back-btn {
+    justify-self: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    font-size: 24px; /* just to make sure it’s visible */
+    color: white; /* or any visible color */
+  }
 
 /* Responsiveness */    
     

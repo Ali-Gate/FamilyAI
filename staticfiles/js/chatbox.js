@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const chatContent = document.getElementById('chat-content');
+    let chatContent = document.getElementById('chat-content');
     const chatForm = document.getElementById('chat-message-form');
-    const input = document.getElementById('chat-message-input');
     const backBtn = document.getElementById('back-btn');
     const initialChatContentHTML = chatContent.innerHTML;
 
@@ -10,11 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let chatBoxAuth = document.querySelector('.chat-box-auth');
     let ticketInput = document.getElementById("ticket-input");
     let sendTicketBtn = document.getElementById("send-ticket-btn");
+    const input = document.getElementById('chat-message-input');
 
-    // Hide back button initially
     backBtn.style.display = 'none';
 
-    // CSRF token helper
     function getCSRFToken() {
         const cookieValue = document.cookie
             .split('; ')
@@ -23,12 +21,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return cookieValue;
     }
 
-    // Load messages for a given ticket
     function loadMessages(ticketId) {
+        console.log("Loading messages for ticket:", ticketId);
         fetch(`/api/messages/?ticket_id=${ticketId}`, {
-            headers: {
-                "X-CSRFToken": getCSRFToken()
-            }
+            headers: { "X-CSRFToken": getCSRFToken() }
         })
         .then(response => {
             if (!response.ok) throw new Error("Failed to fetch messages.");
@@ -41,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             messages.forEach(msg => {
                 const msgDiv = document.createElement('div');
-                msgDiv.className = `chat-message ${msg.sender_username === 'johndoe' ? 'from-user' : 'from-admin'}`;
+                msgDiv.className = `chat-message ${msg.sender_username === CURRENT_USERNAME ? 'from-user' : 'from-admin'}`;
                 msgDiv.innerHTML = `
                     <div class="chat-meta"><strong>${msg.sender_username}</strong> • <span class="chat-time">${msg.created_at}</span></div>
                     <div class="chat-text">${msg.message}</div>
@@ -57,64 +53,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Send ticket logic extracted
-    function handleSendTicketClick() {
-        const ticketInput = document.getElementById("ticket-input");
-        const subject = ticketInput.value.trim();
-
-        if (!subject) {
-            alert("Please enter a subject before submitting.");
-            return;
-        }
-
-        fetch("/api/tickets/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": getCSRFToken(),
-            },
-            body: JSON.stringify({ subject })
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(data => {
-                    throw new Error(data.detail || "Error creating ticket.");
-                });
+    function attachTicketSelectorListener() {
+        ticketSelector = document.getElementById('ticket-selector');
+        ticketSelector?.addEventListener('change', function () {
+            const selectedId = ticketSelector.value;
+            console.log("Ticket selected:", selectedId);
+            if (selectedId) {
+                loadMessages(selectedId);
+                chatForm.style.display = 'flex';
+                backBtn.style.display = 'inline-block';
+                ticketSelectorContainer.style.display = 'none';
+                chatBoxAuth.style.display = 'none';
+            } else {
+                chatContent.innerHTML = '';
+                chatForm.style.display = 'none';
+                backBtn.style.display = 'none';
+                ticketSelectorContainer.style.display = 'block';
+                chatBoxAuth.style.display = 'block';
             }
-            return response.json();
-        })
-        .then(data => {
-            ticketInput.value = "";
-
-            fetch("/api/messages/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCSRFToken(),
-                },
-                body: JSON.stringify({
-                    ticket: data.id,
-                    message: data.subject
-                })
-            });
-
-            loadUserTickets();
-            ticketSelector = document.getElementById('ticket-selector');
-            ticketSelector.value = data.id;
-            loadMessages(data.id);
-            chatForm.style.display = 'flex';
-            backBtn.style.display = 'inline-block';
-            ticketSelectorContainer.style.display = 'none';
-            chatBoxAuth.style.display = 'none';
-        })
-        .catch(error => {
-            console.error("Error:", error.message);
-            alert("Failed to submit ticket: " + error.message);
         });
     }
 
-    // Fetch tickets and populate dropdown
-    function loadUserTickets(back) {
+    function loadUserTickets() {
         fetch("/api/tickets/", {
             headers: { "X-CSRFToken": getCSRFToken() }
         })
@@ -137,10 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 chatBoxAuth.style.display = 'block';
             }
 
-            if (back) {
-                ticketSelectorContainer.style.display = 'block';
-                chatBoxAuth.style.display = 'block';
-            }
+            attachTicketSelectorListener();
         })
         .catch(error => {
             console.error("Failed to load tickets:", error);
@@ -149,7 +106,67 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Submit chat message
+    function attachTicketCreationListener() {
+        const sendTicketBtn = document.getElementById('send-ticket-btn');
+        const ticketInput = document.getElementById('ticket-input');
+
+        if (!sendTicketBtn || !ticketInput) return;
+
+        sendTicketBtn.addEventListener('click', function () {
+            console.log("Send ticket clicked");
+            const subject = ticketInput.value.trim();
+
+            if (!subject) {
+                alert("Please enter a subject before submitting.");
+                return;
+            }
+
+            fetch("/api/tickets/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken(),
+                },
+                body: JSON.stringify({ subject })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        throw new Error(data.detail || "Error creating ticket.");
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                ticketInput.value = "";
+
+                fetch("/api/messages/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCSRFToken(),
+                    },
+                    body: JSON.stringify({
+                        ticket: data.id,
+                        message: data.subject
+                    })
+                });
+
+                loadUserTickets();
+                ticketSelector.value = data.id;
+                loadMessages(data.id);
+                chatForm.style.display = 'flex';
+                backBtn.style.display = 'inline-block';
+                ticketSelectorContainer.style.display = 'none';
+                chatBoxAuth.style.display = 'none';
+            })
+            .catch(error => {
+                console.error("Error:", error.message);
+                alert("Failed to submit ticket: " + error.message);
+            });
+        });
+    }
+
     chatForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const message = input.value.trim();
@@ -172,7 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) throw new Error("Failed to send message.");
             return response.json();
         })
-        .then(() => {
+
+        .then(data => {
             input.value = '';
             loadMessages(selectedTicketId);
         })
@@ -182,16 +200,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Back button resets content
+
     backBtn.addEventListener('click', function () {
         chatContent.innerHTML = initialChatContentHTML;
+
         chatForm.style.display = 'none';
         backBtn.style.display = 'none';
+
         reattachElementsAndListeners();
-        loadUserTickets(true);
+        loadUserTickets();
     });
 
-    // Attach listeners after replacing DOM
     function reattachElementsAndListeners() {
         ticketSelector = document.getElementById('ticket-selector');
         ticketSelectorContainer = document.getElementById('ticket-selector-container');
@@ -199,35 +218,26 @@ document.addEventListener('DOMContentLoaded', function () {
         ticketInput = document.getElementById("ticket-input");
         sendTicketBtn = document.getElementById("send-ticket-btn");
 
-        if (ticketSelector) {
-            ticketSelector.addEventListener('change', function () {
-                const selectedId = ticketSelector.value;
-                if (selectedId) {
-                    loadMessages(selectedId);
-                    chatForm.style.display = 'flex';
-                    backBtn.style.display = 'inline-block';
-                    ticketSelectorContainer.style.display = 'none';
-                    chatBoxAuth.style.display = 'none';
-                } else {
-                    chatContent.innerHTML = '';
-                    chatForm.style.display = 'none';
-                    backBtn.style.display = 'none';
-                    ticketSelectorContainer.style.display = 'block';
-                    chatBoxAuth.style.display = 'none';
-                }
-            });
-        }
-
-        if (sendTicketBtn) {
-            sendTicketBtn.addEventListener("click", handleSendTicketClick);
-        }
+        attachTicketSelectorListener();
+        attachTicketCreationListener();
     }
 
-    // Attach event listener initially if present
-    if (sendTicketBtn) {
-        sendTicketBtn.addEventListener("click", handleSendTicketClick);
-    }
+    // Initial event listener for ticket selector change (global)
+    document.addEventListener('change', function (e) {
+        if (e.target && e.target.id === 'ticket-selector') {
+            const selectedId = e.target.value;
+            console.log("Global event: Ticket selected:", selectedId);
+            if (selectedId) {
+                loadMessages(selectedId);
+                chatForm.style.display = 'flex';
+                backBtn.style.display = 'inline-block';
+                ticketSelectorContainer.style.display = 'none';
+                chatBoxAuth.style.display = 'none';
+            }
+        }
+    });
 
-    // Initial load
+    // Initial calls on page load
+    attachTicketCreationListener();
     loadUserTickets();
 });

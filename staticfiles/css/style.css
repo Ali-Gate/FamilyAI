@@ -154,6 +154,7 @@ textarea {
     display: inline-block;
     width: 100%;
     background-color: var(--secondary);
+
     color: var(--primary);
     font-family: 'Commissioner', sans-serif;
     border-radius: 5px;
@@ -162,6 +163,7 @@ textarea {
 button.arrow-submit {
     margin: 2px 0;
 }
+
 
 .textarea-with-button textarea {
     width: 100%;
@@ -283,7 +285,6 @@ footer p {
 }
 
 /* Chatbox Styles */
-
 #chatbot-container {
     position: absolute;
     width: 300px;
@@ -297,6 +298,7 @@ footer p {
     color: var(--secondary);
 }
 
+
 .chat-box-login > a > button, .chat-box-auth > button {
     background-color: none;
 }
@@ -307,12 +309,19 @@ footer p {
 
 #chat-content {
     max-height: 120px;
+
+#chatbox-input > p {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
     overflow-y: auto;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
     background: var(--tertiary);
     font-size: 0.9rem;
+
 }
 
 .chat-window {
@@ -412,6 +421,18 @@ button#send-ticket-button {
     font-weight: bold;
 }
 
+#chatbox-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#back-btn {
+    justify-self: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    font-size: 24px; /* just to make sure it’s visible */
+    color: white; /* or any visible color */
+  }
 
 /* Responsiveness */    
     
