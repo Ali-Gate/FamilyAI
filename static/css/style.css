@@ -344,7 +344,7 @@ footer p {
 }
 
 .from-user {
-    background-color: #tertiary;
+    background-color: var(--tertiary);
     color: var(--secondary);
     align-self: flex-end;
     text-align: right;
