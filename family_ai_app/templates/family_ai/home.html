@@ -23,7 +23,7 @@
                     <textarea name="problem_description" id="problem-input" rows="3" cols="50"
                         placeholder="Describe your problem here..."></textarea>
                     <button type="submit" class="arrow-submit" aria-label="Submit">
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <i class="fa-solid fa-circle-right"></i>
                     </button>
                 </div>
                 <br>
@@ -60,7 +60,7 @@
     
     <!-- Chat Bot Container-->
     <div id="chatbot-container" class="container">
-        <div id="chatbox-header" style="margin-bottom: 15px;">
+        <div id="chatbox-header">
             <div id="back-btn-div"><i id="back-btn" class="fa-solid fa-arrow-left"></i></div>
             <div id="chatbox-title"><h2>Live Chat</h2></div>
         </div>
@@ -68,15 +68,14 @@
         <div id="chat-content">
             <div id="chat-messages"></div>
             <div id="chatbox-input">
-                <p>Sometimes AI gets it wrong... we get it.</p>
+                <p>Open a ticket to speak with a human.</p>
     
-                {% if user.is_authenticated %}
-                    <p>Open a ticket to speak with a human.</p>
+                {% if user.is_authenticated %}               
 
                     <!-- Ticket Subject Input -->
-                    <div class="chat-box-auth" style="display: none;">
+                    <div class="chat-box-auth">
                         <input id="ticket-input" type="text" placeholder="Type your problem here..." style="width: 80%; padding: 2px;" />
-                        <button id="send-ticket-btn" aria-label="Submit" type="submit"><i class="fa-solid fa-paper-plane"></i>
+                        <button id="send-ticket-btn" aria-label="Submit" type="submit"><i class="fa-solid fa-circle-right"></i>
                         </button>
                     </div>
     
@@ -100,8 +99,8 @@
     
         <!-- Chat Message Form -->
         <form id="chat-message-form" style="display: none;">
-            <input type="text" id="chat-message-input" placeholder="Type your message..." autocomplete="off" style="width: 90%;" />
-            <button type="submit" id="chat-message-send">Send</button>
+            <input type="text" id="chat-message-input" placeholder="Type your message..." autocomplete="off" style="width: calc(100% - 68px);" />
+            <button type="submit" id="chat-message-send"><i class="fa-solid fa-circle-right"></i></button>
         </form>
     </div>
     

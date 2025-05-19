@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Ticket selected:", selectedId);
             if (selectedId) {
                 loadMessages(selectedId);
-                chatForm.style.display = 'flex';
+                chatForm.style.display = '';
                 backBtn.style.display = 'inline-block';
                 ticketSelectorContainer.style.display = 'none';
                 chatBoxAuth.style.display = 'none';
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 loadUserTickets();
                 ticketSelector.value = data.id;
                 loadMessages(data.id);
-                chatForm.style.display = 'flex';
+                chatForm.style.display = '';
                 backBtn.style.display = 'inline-block';
                 ticketSelectorContainer.style.display = 'none';
                 chatBoxAuth.style.display = 'none';
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Global event: Ticket selected:", selectedId);
             if (selectedId) {
                 loadMessages(selectedId);
-                chatForm.style.display = 'flex';
+                chatForm.style.display = '';
                 backBtn.style.display = 'inline-block';
                 ticketSelectorContainer.style.display = 'none';
                 chatBoxAuth.style.display = 'none';
