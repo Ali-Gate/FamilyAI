@@ -202,8 +202,8 @@ button.arrow-submit {
     margin: 0px;
     box-sizing: border-box; 
     float: left;
-    max-height: none;      /* Set your preferred max height */
-    overflow-y: visible;
+    max-height: 280px;      /* Set your preferred max height */
+    overflow-y: auto;
 }
 
 /* Style for the buttons */
@@ -211,12 +211,12 @@ button {
     background-color: var(--primary);
     color: var(--secondary);
     border: none;
-    padding: 6px 10px 8px 10px;
+    padding: 6px 10px 6px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    margin: 10px 2px;
+    margin: 10px 0px;
     cursor: pointer;
     border-radius: 5px;
 }
@@ -306,7 +306,7 @@ footer p {
 }
 
 #chat-content {
-    max-height: 120px;
+    max-height: 90px;
     overflow-y: auto;
     padding: 10px;
     border: 1px solid #ddd;
@@ -322,7 +322,7 @@ footer p {
 }
 
 .chat-message {
-    padding: 10px;
+    padding: 5px;
     border-radius: 8px;
     max-width: 70%;
     clear: both;
@@ -344,8 +344,8 @@ footer p {
 }
 
 .from-user {
-    background-color: var(--tertiary);
-    color: var(--secondary);
+    background-color: var(--secondary);
+    color: var(--primary);
     align-self: flex-end;
     text-align: right;
 }
@@ -367,8 +367,7 @@ footer p {
     }
 }
 
-#chat-message-form {
-    display: none; /* Hidden until activated */
+#chat-message-form {    
     border-top: 1px solid #222;
     padding: 10px;
     background-color: var(--primary);
@@ -381,12 +380,9 @@ button#send-ticket-button {
 }
 
 #chat-message-input {
-    flex: 1;
     padding: 8px 10px;
     border: none;
     border-radius: 4px;
-    background-color: var(--tertiary);
-    color: var(--primary);
     font-size: 14px;
     margin-right: 8px;
 }
@@ -396,7 +392,6 @@ button#send-ticket-button {
 }
 
 #chat-message-send {
-    padding: 8px 14px;
     border: var(--tertiary) solid 1px;
     border-radius: 4px;
     background-color: var(--primary);
