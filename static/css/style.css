@@ -399,6 +399,19 @@ footer p {
     background-color: #3d3d3d;
 }
 
+#chatbox-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#back-btn {
+    display: inline-block !important;
+    justify-self: flex-start;
+    align-self: flex-start;
+    cursor: pointer;
+    font-size: 24px; /* just to make sure it’s visible */
+    color: white; /* or any visible color */
+  }
 
 /* Responsiveness */    
     
