@@ -34,15 +34,17 @@
 <body>
     <header>
         <div id="fai_header">
-            <div class="logo">
-                <b>Family AI</b> 
-                <p>Technology made easy</p>
-            </div>
+            <a href="{% url 'family_ai_app:home' %}">
+                <div class="logo">
+                    <b>Family AI</b>
+                    <p>Technology made easy</p>
+                </div>
+            </a>
             <nav>
                 <div>
                     {% if user.is_authenticated %}
                     <a class="nav-link" href="{% url 'family_ai_app:alerts' %}">
-                    <i class="fa-solid fa-bell notif-bell"></i>
+                        <i class="fa-solid fa-bell notif-bell"></i>
                     </a>
                     {% endif %}
                     <a class="nav-link" href="{% url 'family_ai_app:home' %}">Home</a>
@@ -51,14 +53,23 @@
                 <div><a href="{% url 'account_logout' %}">Logout</a></div>
                 {% else %}
                 <div><a href="{% url 'account_login' %}">Login</a></div>
-                <div><a href="{% url 'account_signup' %}">Register</a></div>                
+                <div><a href="{% url 'account_signup' %}">Sign Up</a></div>
                 {% endif %}
             </nav>
+            <div class="container-fluid">
+                <div class="salutation">
+                    {% if request.user.is_authenticated %}
+                    <p>You are logged in as <span class="username">{{ request.user.username }}</span></p>
+                    {% else %}
+                    <p>You are currently not logged in</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </header>
 
     <main>
-        <div>
+        <div id="main-align">
             {% block content %}
             {% endblock %}
         </div>
