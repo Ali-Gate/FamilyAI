@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             messages.forEach(msg => {
                 const msgDiv = document.createElement('div');
-                msgDiv.className = `chat-message ${msg.sender_username === 'johndoe' ? 'from-user' : 'from-admin'}`;
+                msgDiv.className = `chat-message ${msg.sender_username === CURRENT_USERNAME ? 'from-user' : 'from-admin'}`;
                 msgDiv.innerHTML = `
                     <div class="chat-meta"><strong>${msg.sender_username}</strong> • <span class="chat-time">${msg.created_at}</span></div>
                     <div class="chat-text">${msg.message}</div>

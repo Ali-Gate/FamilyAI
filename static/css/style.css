@@ -405,7 +405,6 @@ footer p {
 }
 
 #back-btn {
-    display: inline-block !important;
     justify-self: flex-start;
     align-self: flex-start;
     cursor: pointer;

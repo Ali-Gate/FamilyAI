@@ -1,113 +1,115 @@
-{% load static %}
-{% load i18n %}
-{% url 'family_ai_app:home' as home_url %}
-{% url 'family_ai_app:alerts' as alerts_url %}
-{% url 'account_login' as login_url %}
-{% url 'account_signup' as signup_url %}
-{% url 'account_logout' as logout_url %}
+{% load static %} {% load i18n %} {% url 'family_ai_app:home' as home_url %} {%
+url 'family_ai_app:alerts' as alerts_url %} {% url 'account_login' as login_url
+%} {% url 'account_signup' as signup_url %} {% url 'account_logout' as
+logout_url %}
 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Family_AI</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/alerts.css' %}">
-    <script src="https://kit.fontawesome.com/0737a17f1d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/alerts.css' %}" />
+    <script
+      src="https://kit.fontawesome.com/0737a17f1d.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script>
-        const CSRF_TOKEN = "{{ csrf_token }}";
+      const CSRF_TOKEN = "{{ csrf_token }}";
     </script>
     <script>
-        window.MODEL_URL = "{% static 'models/granny.glb' %}";
-        window.FALLBACK_IMAGE = "{% static 'images/image.png' %}";
+      window.MODEL_URL = "{% static 'models/granny.glb' %}";
+      window.FALLBACK_IMAGE = "{% static 'images/image.png' %}";
     </script>
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/alerts.js' %}"></script>
     <script src="{% static 'js/chatbox.js'%}"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <div id="fai_header">
-            <a href="{% url 'family_ai_app:home' %}">
-                <div class="logo">
-                    <b>Family AI</b>
-                    <p>Technology made easy</p>
-                </div>
+      <div id="fai_header">
+        <a href="{% url 'family_ai_app:home' %}">
+          <div class="logo">
+            <b>Family AI</b>
+            <p>Technology made easy</p>
+          </div>
+        </a>
+        <nav>
+          <div>
+            {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'family_ai_app:alerts' %}">
+              <i class="fa-solid fa-bell notif-bell"></i>
             </a>
-            <nav>
-                <div>
-                    {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'family_ai_app:alerts' %}">
-                        <i class="fa-solid fa-bell notif-bell"></i>
-                    </a>
-                    {% endif %}
-                    <a class="nav-link" href="{% url 'family_ai_app:home' %}">Home</a>
-                </div>
-                {% if user.is_authenticated %}
-                <div><a href="{% url 'account_logout' %}">Logout</a></div>
-                {% else %}
-                <div><a href="{% url 'account_login' %}">Login</a></div>
-                <div><a href="{% url 'account_signup' %}">Sign Up</a></div>
-                {% endif %}
-            </nav>
-            <div class="container-fluid">
-                <div class="salutation">
-                    {% if request.user.is_authenticated %}
-                    <p>You are logged in as <span class="username">{{ request.user.username }}</span></p>
-                    {% else %}
-                    <p>You are currently not logged in</p>
-                    {% endif %}
-                </div>
-            </div>
+            {% endif %}
+            <a class="nav-link" href="{% url 'family_ai_app:home' %}">Home</a>
+          </div>
+          {% if user.is_authenticated %}
+          <div><a href="{% url 'account_logout' %}">Logout</a></div>
+          {% else %}
+          <div><a href="{% url 'account_login' %}">Login</a></div>
+          <div><a href="{% url 'account_signup' %}">Sign Up</a></div>
+          {% endif %}
+        </nav>
+        <div class="container-fluid">
+          <div class="salutation">
+            {% if request.user.is_authenticated %}
+            <p>
+              You are logged in as
+              <span class="username">{{ request.user.username }}</span>
+            </p>
+            {% else %}
+            <p>You are currently not logged in</p>
+            {% endif %}
+          </div>
         </div>
+      </div>
     </header>
 
     <main>
-        <div id="main-align">
-            {% block content %}
-            {% endblock %}
-        </div>
+      <div id="main-align">{% block content %} {% endblock %}</div>
     </main>
 
     <footer>
-        <div id="fai_footer">
-            <p>&copy; 2025 Family AI. All rights reserved.</p>
-        </div>
+      <div id="fai_footer">
+        <p>&copy; 2025 Family AI. All rights reserved.</p>
+      </div>
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            try {
-                const response = await fetch("/api/notifications/", {
-                    method: "GET",
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest",
-                        "Accept": "application/json",
-                    },
-                    credentials: "same-origin",
-                });
-        
-                if (response.ok) {
-                    const data = await response.json();
-                    const hasUnseen = data.some(n => !n.is_seen);
-                    if (hasUnseen) {
-                        const bellIcon = document.querySelector(".notif-bell");
-                        if (bellIcon) {
-                            bellIcon.classList.add("unseen");
-                        }
-                    }
-                }
-            } catch (err) {
-                console.error("Failed to check unseen notifications:", err);
-            }
-        });
-        </script>
-</body>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const response = await fetch("/api/notifications/", {
+            method: "GET",
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              Accept: "application/json",
+            },
+            credentials: "same-origin",
+          });
 
+          if (response.ok) {
+            const data = await response.json();
+            const hasUnseen = data.some((n) => !n.is_seen);
+            if (hasUnseen) {
+              const bellIcon = document.querySelector(".notif-bell");
+              if (bellIcon) {
+                bellIcon.classList.add("unseen");
+              }
+            }
+          }
+        } catch (err) {
+          console.error("Failed to check unseen notifications:", err);
+        }
+      });
+    </script>
+
+    <script>
+      const CURRENT_USERNAME = "{{ request.user.username }}";
+    </script>
+  </body>
 </html>
