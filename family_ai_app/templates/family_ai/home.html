@@ -20,10 +20,10 @@
             <form id="problem-form">
                 {% csrf_token %}
                 <div class="textarea-with-button">
-                    <textarea name="problem_description" id="problem-input" rows="4" cols="50"
+                    <textarea name="problem_description" id="problem-input" rows="3" cols="50"
                         placeholder="Describe your problem here..."></textarea>
                     <button type="submit" class="arrow-submit" aria-label="Submit">
-                        &#8594; <!-- Unicode right arrow, or use an icon -->
+                        <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </div>
                 <br>
@@ -60,9 +60,9 @@
     
     <!-- Chat Bot Container-->
     <div id="chatbot-container" class="container">
-        <div style="text-align: center; margin-bottom: 15px;">
+        <div>
             <i id="back-btn" class="fa-solid fa-arrow-left" style="display:none; cursor:pointer;"></i>
-            <h2 style="display: inline-block; margin-right: 20px;">Live Chat</h2>
+            <h2 style="display: inline-block; margin-left: 6px;">Live Chat</h2>
         </div>
     
         <div id="chat-content">
@@ -74,12 +74,13 @@
 
                     <!-- Ticket Subject Input -->
                     <div class="chat-box-auth" style="display: none;">
-                        <input id="ticket-input" type="text" placeholder="Type your problem here..." style="width: 80%; padding: 8px;" />
-                        <button id="send-ticket-btn" type="button">Send</button>
+                        <input id="ticket-input" type="text" placeholder="Type your problem here..." style="width: 80%; padding: 2px;" />
+                        <button id="send-ticket-btn" aria-label="Submit" type="submit"><i class="fa-solid fa-paper-plane"></i>
+                        </button>
                     </div>
     
                     <!-- Ticket Selector (initially hidden) -->
-                    <div id="ticket-selector-container" style="display: none; margin-top: 15px;">
+                    <div id="ticket-selector-container" style="display: none;">
                         <label for="ticket-selector">Select an Open Ticket:</label>
                         <select id="ticket-selector" style="width: 80%; padding: 6px; margin-top: 5px;">
                             <option value="">-- Select a Ticket --</option>
@@ -97,8 +98,8 @@
         </div>
     
         <!-- Chat Message Form -->
-        <form id="chat-message-form" style="display: none; margin-top: 10px;">
-            <input type="text" id="chat-message-input" placeholder="Type your message..." autocomplete="off" style="width: 80%; padding: 8px;" />
+        <form id="chat-message-form" style="display: none;">
+            <input type="text" id="chat-message-input" placeholder="Type your message..." autocomplete="off" style="width: 90%;" />
             <button type="submit" id="chat-message-send">Send</button>
         </form>
     </div>
