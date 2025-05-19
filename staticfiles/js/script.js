@@ -51,11 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const chatContainer = document.getElementById('id_chat_item_container');
         
         if (!input) return;
-        
+        chatContainer.innerHTML = '';
         try {
             // Add user message to chat and history
-            const userMessage = `You: ${input}`;
-            chatContainer.innerHTML += `<div class="user-message">${userMessage}</div>`;
+            const userMessage = `<h3>You:</h3> ${input}`;
+            chatContainer.innerHTML += `<div class="user-message">${userMessage}</div><br>`;
             saveToHistory('You', input);
             
             // Send to API with proper CSRF token
@@ -73,17 +73,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add AI response to chat and history
             if (data.response) {
                 const cleanMessage = cleanResponse(data.response);
-                chatContainer.innerHTML += `<div class="ai-message">AI: ${cleanMessage}</div>`;
+                chatContainer.innerHTML += `<div class="ai-message"><h3>Response:</h3> ${cleanMessage}</div>`;
                 saveToHistory('AI', cleanMessage);
             } else if (data.error) {
                 const cleanError = cleanResponse(data.error);
-                chatContainer.innerHTML += `<div class="error-message">Error: ${cleanError}</div>`;
+                chatContainer.innerHTML += `<div class="error-message"><h3>Error:</h3> ${cleanError}</div>`;
                 saveToHistory('System', cleanError);
             }
             
         } catch (error) {
             console.error('Error:', error);
-            chatContainer.innerHTML += `<div class="error-message">Connection error</div>`;
+            chatContainer.innerHTML += `<div class="error-message"><h3>Connection error</h3></div>`;
         }
     });
 
