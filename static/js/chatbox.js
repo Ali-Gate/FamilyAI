@@ -22,11 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function loadMessages(ticketId) {
-        console.log("Loading messages for ticket:", ticketId); // 👈 Add this
+        console.log("Loading messages for ticket:", ticketId);
         fetch(`/api/messages/?ticket_id=${ticketId}`, {
-            headers: {
-                "X-CSRFToken": getCSRFToken()
-            }
+            headers: { "X-CSRFToken": getCSRFToken() }
         })
         .then(response => {
             if (!response.ok) throw new Error("Failed to fetch messages.");
@@ -59,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ticketSelector = document.getElementById('ticket-selector');
         ticketSelector?.addEventListener('change', function () {
             const selectedId = ticketSelector.value;
-            console.log("Ticket selected:", selectedId); 
+            console.log("Ticket selected:", selectedId);
             if (selectedId) {
                 loadMessages(selectedId);
                 chatForm.style.display = 'flex';
@@ -99,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 chatBoxAuth.style.display = 'block';
             }
 
-            attachTicketSelectorListener(); // Reattach every time
+            attachTicketSelectorListener();
         })
         .catch(error => {
             console.error("Failed to load tickets:", error);
@@ -108,16 +106,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function reattachElementsAndListeners() {
-        ticketSelector = document.getElementById('ticket-selector');
-        ticketSelectorContainer = document.getElementById('ticket-selector-container');
-        chatBoxAuth = document.querySelector('.chat-box-auth');
-        ticketInput = document.getElementById("ticket-input");
-        sendTicketBtn = document.getElementById("send-ticket-btn");
+    function attachTicketCreationListener() {
+        const sendTicketBtn = document.getElementById('send-ticket-btn');
+        const ticketInput = document.getElementById('ticket-input');
 
-        attachTicketSelectorListener();
+        if (!sendTicketBtn || !ticketInput) return;
 
-        sendTicketBtn?.addEventListener("click", function () {
+        sendTicketBtn.addEventListener('click', function () {
+            console.log("Send ticket clicked");
             const subject = ticketInput.value.trim();
 
             if (!subject) {
@@ -213,7 +209,19 @@ document.addEventListener('DOMContentLoaded', function () {
         loadUserTickets();
     });
 
-    // Initial calls
+    function reattachElementsAndListeners() {
+        ticketSelector = document.getElementById('ticket-selector');
+        ticketSelectorContainer = document.getElementById('ticket-selector-container');
+        chatBoxAuth = document.querySelector('.chat-box-auth');
+        ticketInput = document.getElementById("ticket-input");
+        sendTicketBtn = document.getElementById("send-ticket-btn");
+
+        attachTicketSelectorListener();
+
+        attachTicketCreationListener();
+    }
+
+    // Initial event listener for ticket selector change (global)
     document.addEventListener('change', function (e) {
         if (e.target && e.target.id === 'ticket-selector') {
             const selectedId = e.target.value;
@@ -227,5 +235,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+
+    // Initial calls on page load
+    attachTicketCreationListener();
     loadUserTickets();
 });
