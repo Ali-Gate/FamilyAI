@@ -11,7 +11,12 @@ class MessageListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         ticket_id = self.request.query_params.get('ticket_id')
-        queryset = Message.objects.all() if user.is_staff or user.is_superuser else Message.objects.filter(sender=user)
+
+        if user.is_staff or user.is_superuser:
+            queryset = Message.objects.all()
+        else:
+            # Include all messages where the ticket belongs to the current user
+            queryset = Message.objects.filter(ticket__user=user)
 
         if ticket_id:
             queryset = queryset.filter(ticket__id=ticket_id)
