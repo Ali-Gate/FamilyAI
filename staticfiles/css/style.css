@@ -154,7 +154,6 @@ textarea {
     display: inline-block;
     width: 100%;
     background-color: var(--secondary);
-
     color: var(--primary);
     font-family: 'Commissioner', sans-serif;
     border-radius: 5px;
@@ -163,7 +162,6 @@ textarea {
 button.arrow-submit {
     margin: 2px 0;
 }
-
 
 .textarea-with-button textarea {
     width: 100%;
@@ -285,6 +283,7 @@ footer p {
 }
 
 /* Chatbox Styles */
+
 #chatbot-container {
     position: absolute;
     width: 300px;
@@ -298,7 +297,6 @@ footer p {
     color: var(--secondary);
 }
 
-
 .chat-box-login > a > button, .chat-box-auth > button {
     background-color: none;
 }
@@ -309,19 +307,12 @@ footer p {
 
 #chat-content {
     max-height: 120px;
-
-#chatbox-input > p {
-    color: #fff;
-    margin-bottom: 20px;
-}
-
     overflow-y: auto;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
     background: var(--tertiary);
     font-size: 0.9rem;
-
 }
 
 .chat-window {
@@ -353,7 +344,7 @@ footer p {
 }
 
 .from-user {
-    background-color: #tertiary;
+    background-color: var(--tertiary);
     color: var(--secondary);
     align-self: flex-end;
     text-align: right;

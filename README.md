@@ -45,6 +45,10 @@ Family AI simplifies tech support by offering **AI-driven assistance** for commo
 #### Wireframes
 ![wireframes](readme_images/wireframe.png)
 
+### Entity Relationship Diagram
+
+![entity relationship diagrams](readme_images/erds.png)
+
 ---
 
 ## Technologies Used
